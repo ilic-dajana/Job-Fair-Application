@@ -1,12 +1,81 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title> Registracija Kompanija</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+         <h:form>
+            <h:panelGrid columns="3">
+                <h:outputText value="Username:"/>
+                <h:inputText value="#{RegistracijaKompanija.username}"/>
+                <h:outputText value=""/>
+                
+                <h:outputText value="Password:"/>
+                <h:inputText value="#{RegistracijaKompanija.password}"/>   
+                <h:outputText value=""/>
+                
+                <h:outputText value="Ponoviti password: "/>
+                <h:inputText value="#{RegistracijaKompanija.ponovljenPassword}"/>   
+                <h:outputText value=""/>
+               
+                <h:outputText value="Naziv kompanije: "/>
+                <h:inputText value ="#{RegistracijaKompanija.kompanija}"/>
+                <h:outputText value=""/>
+            
+                <h:outputText value="grad"/>
+                <h:inputText value ="#{RegistracijaKompanija.grad}"/>
+                <h:outputText value=""/>
+              
+                <h:outputText value ="adresa"/>
+                <h:inputText value="#{RegistracijaKompanija.adresa}"/>
+                <h:outputText value=""/>
+               
+                <h:outputText value="Ime direktora"/>
+                <h:inputText value = "#{RegistracijaKompanija.ime}"/>
+                <h:outputText value=""/>
+                
+                <h:outputText value="Prezime direktora"/>
+                <h:inputText value = "#{RegistracijaKompanija.prezime}"/>
+                <h:outputText value=""/>
+                
+                <h:outputText value="PIB"/>
+                <h:inputText value = "#{RegistracijaKompanija.PIB}"/>
+                <h:outputText value=""/>
+                
+                <h:outputText value="Broj zaposlenih:"/>
+                <h:inputText value = "#{RegistracijaKompanija.broj_zaposlenih}"/>
+                <h:outputText value=""/>
+                
+                <h:outputText value="E-mail:"/>
+                <h:inputText value = "#{RegistracijaKompanija.email}"/>
+                <h:outputText value=""/>
+                
+                <h:outputText value="Web-sajt:"/>
+                <h:inputText value = "#{RegistracijaKompanija.sajt}"/>
+                <h:outputText value=""/>
+                
+                
+                
+                <h:outputText value="Delatnost firme:"/>
+                <h:selectOneMenu value="#{RegistracijaKompanija.delatnost}">
+                    <f:selectItem itemValue="0" itemLabel="IT" />
+                    <f:selectItem itemValue="1" itemLabel="Telekomunikacije" />
+                    <f:selectItem itemValue="2" itemLabel="Energetika" />
+                    <f:selectItem itemValue="3" itemLabel="Gradjevina i arhitektura" />
+                    <f:selectItem itemValue="4" itemLabel="Masinstvo" />                    
+                </h:selectOneMenu>
+                <h:outputText value=""/>
+              
+                <h:outputText value="Specijalnost"/>
+                <h:inputText value = "#{RegistracijaKompanija.specijalnost}"/>
+                <h:outputText value=""/>
+                    
+                <h:commandButton value="Registruj se" action="#{RegistracijaKompanija.registracija()}"/>   
+            </h:panelGrid>
+        </h:form>
     </h:body>
 </html>
 

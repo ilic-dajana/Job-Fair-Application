@@ -29,7 +29,7 @@ public class RegistracijaStudent {
         try {
             if(!UserDao.proveriUsername(username)){
                 greskaUsername ="Username postoji vec u bazi";
-                return "registracijaStudent";
+                return "error";
             }
             
             if(!UserDao.unesiStudent(username, password, ime, prezime, telefon, email, godinaStudija, diplomirao)){

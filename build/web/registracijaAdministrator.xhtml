@@ -3,10 +3,42 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Registracija Administrator</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+             <h:panelGrid columns="3">
+                <h:outputText value="Username:"/>
+                <h:inputText value="#{RegistracijaAdministrator.username}"/>
+                <h:outputText value=""/>
+                
+                <h:outputText value="Password:"/>
+                <h:inputText value="#{RegistracijaAdministrator.password}"/>   
+                <h:outputText value=""/>
+                
+                <h:outputText value="Ponoviti password"/>
+                <h:inputText value="#{RegistracijaAdministrator.ponovljenPassword}"/>   
+                <h:outputText value=""/>
+               
+                <h:outputText value="Ime"/>
+                <h:inputText value ="#{RegistracijaAdministrator.ime}"/>
+                <h:outputText value=""/>
+            
+                <h:outputText value="Prezime"/>
+                <h:inputText value ="#{RegistracijaAdministrator.prezime}"/>
+                <h:outputText value=""/>
+              
+                <h:outputText value ="Kontakt telefon"/>
+                <h:inputText value="#{RegistracijaAdministrator.telefon}"/>
+                <h:outputText value=""/>
+               
+                <h:outputText value="E-mail"/>
+                <h:inputText value = "#{RegistracijaAdministrator.email}"/>
+                <h:outputText value=""/>
+                
+                <h:commandButton value="Registruj se" action="#{RegistracijaAdministrator.registracija()}"/>   
+            </h:panelGrid>
+        </h:form>
     </h:body>
 </html>
 

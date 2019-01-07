@@ -125,4 +125,84 @@ public class UserDao {
                 DB.getInstance().putConnection(conn);
         }    
     }
+    
+    public static boolean unesiAdministrator(String username, String password, String ime, String prezime, 
+                                     int telefon, String email) throws SQLException{
+        
+        boolean flag = unesiUser(username, password);
+        if(!flag)
+            return false;
+        int UserKey = nadjiUserKljuc(username);
+        
+        if(UserKey < 0)
+            return false;
+        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try{
+            conn = DB.getInstance().getConnection();
+            if(conn == null)
+                return false;
+            ps = conn.prepareStatement("INSERT INTO administrator(id, ime, prezime, telefon, email) VALUES(?,?,?,?,?)");
+            ps.setInt(1, UserKey);
+            ps.setString(2, ime);
+            ps.setString(3, prezime);
+            ps.setInt(4, telefon);
+            ps.setString(5, email);
+            
+            ps.executeUpdate();
+            return true;       
+        }catch(Exception e){
+            return false;
+        }finally{
+            if(ps != null)
+                ps.close();
+            if(conn != null)
+                DB.getInstance().putConnection(conn);
+        }    
+    }
+    
+    public static boolean unesiKompaniju(String username, String password, String kompanija,String grad, String adresa, String ime, String prezime, 
+                                     int PIB, int broj_zaposlenih, String email, String sajt, int delatnost, String specijalnost) throws SQLException{
+        
+        boolean flag = unesiUser(username, password);
+        if(!flag)
+            return false;
+        int UserKey = nadjiUserKljuc(username);
+        
+        if(UserKey < 0)
+            return false;
+        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try{
+            conn = DB.getInstance().getConnection();
+            if(conn == null)
+                return false;
+            ps = conn.prepareStatement("INSERT INTO kompanija(id, naziv,adresa, direktor_ime, direktor_prezime,"
+                    + " pib, brojZaposlenih, email, sajt, delatnost, specijalnost) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+            ps.setInt(1, UserKey);
+            ps.setString(2, kompanija);
+            ps.setString(3, adresa);
+            ps.setString(4, ime);
+            ps.setString(5, prezime);
+            ps.setInt(6, PIB);
+            ps.setInt(7, broj_zaposlenih);
+            ps.setString(8, email);
+            ps.setString(9, sajt);
+            ps.setInt(10, delatnost);
+            ps.setString(11, specijalnost);
+            ps.executeUpdate();
+            return true;       
+        }catch(Exception e){
+            return false;
+        }finally{
+            if(ps != null)
+                ps.close();
+            if(conn != null)
+                DB.getInstance().putConnection(conn);
+        }    
+    }
 }
