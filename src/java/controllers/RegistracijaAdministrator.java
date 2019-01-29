@@ -5,9 +5,12 @@
  */
 package controllers;
 
+import java.io.Serializable;
 import java.sql.SQLException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import util.dao.UserDao;
 
 /**
@@ -16,26 +19,29 @@ import util.dao.UserDao;
  */
 @ManagedBean(name = "RegistracijaAdministrator")
 @SessionScoped
-public class RegistracijaAdministrator {
+public class RegistracijaAdministrator implements Serializable {
     private String username;
     private String password;
-    private int ponovljenPassword;
+    private String ponovljenPassword;
     private String ime, prezime, email;
-    private int telefon;
+    private String telefon;
     
     public String registracija(){
         try {
-            if(!UserDao.proveriUsername(username)){                
-                return "registracijaStudent";
+            if(UserDao.proveriUsername(username)){                
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, " Try another username", null));
+                return null;
             }
             
             if(!UserDao.unesiAdministrator(username, password, ime, prezime, telefon, email)){
                 return "error";
             }
+             return "login?faces-redirect=true";
         } catch (SQLException ex) {            
             return "error";
         }
-        return "index";
+       
     }
     
     public String getUsername() {
@@ -54,11 +60,11 @@ public class RegistracijaAdministrator {
         this.password = password;
     }
 
-    public int getPonovljenPassword() {
+    public String getPonovljenPassword() {
         return ponovljenPassword;
     }
 
-    public void setPonovljenPassword(int ponovljenPassword) {
+    public void setPonovljenPassword(String ponovljenPassword) {
         this.ponovljenPassword = ponovljenPassword;
     }
 
@@ -86,11 +92,11 @@ public class RegistracijaAdministrator {
         this.email = email;
     }
 
-    public int getTelefon() {
+    public String getTelefon() {
         return telefon;
     }
 
-    public void setTelefon(int telefon) {
+    public void setTelefon(String telefon) {
         this.telefon = telefon;
     } 
     

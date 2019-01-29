@@ -2,87 +2,69 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Registracija Student</title>
-        
-<!--        <script>
-           function checkPassword(String str){
-            var checkUpperCase = /[A-Z]/.test(str);
-            var checkLowerCase = false;
-            var checkFirstLetter = false;
-            var checkLength = false;
-            if(7 < str.length < 13)
-                checkLength = true;
-            var count = 0;
-            for(var i = 0, len = str.length; i < len; i++){
-                if(/[a-z]/.test(str.charAt(i))) count++;
-            }
-            if(count >= 3)
-                checkLowerCase = true;
-            
-            if((/[a-z]/.test(str.charAt(0))) || (/[A-Z]/.test(str.charAt(0))))
-                checkFirstLetter = true;
-            var checkNumber = /[0-9]/.test(str);
-            var checkSymbol = str.includes(#) || str.includes(*) || str.includes(.)|| str.includes(!)|| str.includes(?) || str.includes($); 
-            
-            if(checkSymbol && checkNumber && checkLowerCase && checkUpperCase && checkFirstLetter && checkLength)
-                return true;
-        }
-        </script>-->
-        
-        
+        <h:outputStylesheet library="css" name="registration_style.css"/>
     </h:head>
     <h:body>
-        <h:form>
-            <h:panelGrid columns="3">
-                <h:outputText value="Username:"/>
-                <h:inputText value="#{RegistracijaStudent.username}"/>
-                <h:outputText value=""/>
+        <h:form id="studentRegistracija" class="form">
+
+            <p:messages showDetail="false" autoUpdate="true"/>  
+            <p:panel header="Registracija Student" class="panel">
+            <h:panelGrid columns="2" cellpadding="5">
                 
-                <h:outputText value="Password:"/>
-                <h:inputText value="#{RegistracijaStudent.password}"/>   
-                <h:outputText value=""/>
-                
-                <h:outputText value="Ponoviti password"/>
-                <h:inputText value="#{RegistracijaStudent.ponovljenPassword}"/>   
-                <h:outputText value=""/>
+                <p:outputLabel for="username" value="Username:"/>
+                <p:inputText id="username" value="#{RegistracijaStudent.username}"
+                             required="true" requiredMessage="Uneti username!"/>
                
-                <h:outputText value="Ime"/>
-                <h:inputText value ="#{RegistracijaStudent.ime}"/>
-                <h:outputText value=""/>
+                
+                <p:outputLabel for="passwordInput" value="Password:"/>
+                <p:password id="passwordInput" value="#{RegistracijaStudent.password}"
+                            required="true" requiredMessage="Uneti password!"
+                            feedback="true" promptLabel="password strength"
+                            weakLabel="weak" goodLabel="good" strongLabel="strong"
+                            inline="true" match="confirmPassword"/>   
+               
+                <p:outputLabel for="confirmPassword" value="Ponoviti password"/>
+                <p:password id="confirmPassword" value="#{RegistracijaStudent.ponovljenPassword}"
+                            required="true" requiredMessage="Ponoviti password!"/>   
+               
+                <p:outputLabel for="name" value="Ime:"/>
+                <p:inputText id="name" value ="#{RegistracijaStudent.ime}"
+                             required="true" requiredMessage="Uneti ime!"/>
             
-                <h:outputText value="Prezime"/>
-                <h:inputText value ="#{RegistracijaStudent.prezime}"/>
-                <h:outputText value=""/>
-              
-                <h:outputText value ="Kontakt telefon"/>
-                <h:inputText value="#{RegistracijaStudent.telefon}"/>
-                <h:outputText value=""/>
+                <p:outputLabel for="prezime" value="Prezime:"/>
+                <p:inputText id="prezime" value ="#{RegistracijaStudent.prezime}"
+                             required="true" requiredMessage="Uneti prezime!"/>
+                              
+                <p:outputLabel for="telefon" value ="Kontakt telefon:"/>
+                <p:inputText id="telefon" value="#{RegistracijaStudent.telefon}"
+                             required="true" requiredMessage="Uneti telefon!"/>                
                
-                <h:outputText value="E-mail"/>
-                <h:inputText value = "#{RegistracijaStudent.email}"/>
-                <h:outputText value=""/>
+                <p:outputLabel for="email" value="E-mail:"/>
+                <p:inputText id="email" value = "#{RegistracijaStudent.email}"
+                             required="email" requiredMessage="Uneti email!"/>
                 
-                <h:outputText value="Da li je student diplomirao"/>
-                <h:selectOneRadio value="#{RegistracijaStudent.diplomirao}">
+                <p:outputLabel for="diplomirao" value="Da li je student diplomirao:"/>
+                <p:selectOneRadio id="diplomirao" value="#{RegistracijaStudent.diplomirao}">
                     <f:selectItem itemValue="0" itemLabel="Nije" />
                     <f:selectItem itemValue="1" itemLabel="Jeste" />                   
-                </h:selectOneRadio>
-                <h:outputText value=""/>
-              
-                <h:outputText value="Godina studija:"/>
-                <h:selectOneRadio value="#{RegistracijaStudent.godinaStudija}" layout="pageDirection">
+                </p:selectOneRadio>
+                             
+                <p:outputLabel for="godina" value="Godina studija:"/>
+                <p:selectOneRadio id="godina" value="#{RegistracijaStudent.godinaStudija}" layout="pageDirection">
                  <br/>   <f:selectItem itemValue="1" itemLabel="Prva godina" />
                     <f:selectItem itemValue="2" itemLabel="Druga godina" />
                     <f:selectItem itemValue="3" itemLabel="Treca godina" />
                     <f:selectItem itemValue="4" itemLabel="Cetvrta godina" />
                     <f:selectItem itemValue="5" itemLabel="Peta(master) godina" />
-                 </h:selectOneRadio>
-                <h:outputText value=""/>
+                 </p:selectOneRadio>
+                </h:panelGrid>
                     
-                <h:commandButton value="Registruj se" action="#{RegistracijaStudent.registracija()}"/>   
-            </h:panelGrid>
+                <p:commandButton value="Registruj se" action="#{RegistracijaStudent.registracija()}" update="@form"/>   
+                </p:panel>
         </h:form>
             
     </h:body>

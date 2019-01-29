@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 29, 2019 2:48:52 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Administrator" table="administrator" catalog="job_fair" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="foreign">
+                <param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user" class="beans.User" constrained="true"></one-to-one>
+        <property name="ime" type="string">
+            <column name="ime" length="45" not-null="true" />
+        </property>
+        <property name="prezime" type="string">
+            <column name="prezime" length="45" not-null="true" />
+        </property>
+        <property name="telefon" type="string">
+            <column name="telefon" length="45" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

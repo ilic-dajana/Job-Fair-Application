@@ -1,43 +1,53 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Registracija Administrator</title>
+        <h:outputStylesheet library="css" name="registration_style.css"/>
     </h:head>
+    
     <h:body>
-        <h:form>
-             <h:panelGrid columns="3">
-                <h:outputText value="Username:"/>
-                <h:inputText value="#{RegistracijaAdministrator.username}"/>
-                <h:outputText value=""/>
+        <h:form id="adminRegistracija" class="form">
+            <p:messages showDetail="false" autoUpdate="true"/>
+           
+            <p:panel header="Registracija Administratora" class="panel"> 
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="username" value="Username:"/>
+                <p:inputText id="username" value="#{RegistracijaAdministrator.username}"
+                             required="true" requiredMessage="Uneti username!"/>
+                                
+                <p:outputLabel for="password" value="Password:"/>
+                <p:password id="password" value="#{RegistracijaAdministrator.password}"
+                             required="true" requiredMessage="Uneti password!"
+                             feedback="true" promptLabel="Password strength"
+                             weakLabel="weak" goodLabel="good" strongLabel="strong" inline="true" match="confirmPassword" />   
                 
-                <h:outputText value="Password:"/>
-                <h:inputText value="#{RegistracijaAdministrator.password}"/>   
-                <h:outputText value=""/>
-                
-                <h:outputText value="Ponoviti password"/>
-                <h:inputText value="#{RegistracijaAdministrator.ponovljenPassword}"/>   
-                <h:outputText value=""/>
+                <p:outputLabel for="confirmPassword" value="Ponoviti password"/>
+                <p:password id="confirmPassword" value="#{RegistracijaAdministrator.ponovljenPassword}"
+                            required="true" requiredMessage="Ponoviti password!"/>
+                          
                
-                <h:outputText value="Ime"/>
-                <h:inputText value ="#{RegistracijaAdministrator.ime}"/>
-                <h:outputText value=""/>
+                <p:outputLabel for="name" value="Ime:"/>
+                <p:inputText  id="name" value ="#{RegistracijaAdministrator.ime}"
+                              required="true" requiredMessage="Uneti ime!"/>
             
-                <h:outputText value="Prezime"/>
-                <h:inputText value ="#{RegistracijaAdministrator.prezime}"/>
-                <h:outputText value=""/>
+                <p:outputLabel for="lastname" value="Prezime:"/>
+                <p:inputText id="lastname" value ="#{RegistracijaAdministrator.prezime}"
+                             required="true" requiredMessage="Uneti prezime!"/>
               
-                <h:outputText value ="Kontakt telefon"/>
-                <h:inputText value="#{RegistracijaAdministrator.telefon}"/>
-                <h:outputText value=""/>
+                <p:outputLabel for="phone" value ="Kontakt telefon:"/>
+                <p:inputText id="phone" value="#{RegistracijaAdministrator.telefon}"
+                             required="true" requiredMessage="Uneti broj telefona!"/>
                
-                <h:outputText value="E-mail"/>
-                <h:inputText value = "#{RegistracijaAdministrator.email}"/>
-                <h:outputText value=""/>
+                <p:outputLabel for="email" value="E-mail:"/>
+                <p:inputText id="email" value = "#{RegistracijaAdministrator.email}"
+                             required="true" requiredMessage="Uneti email!"/>
                 
-                <h:commandButton value="Registruj se" action="#{RegistracijaAdministrator.registracija()}"/>   
             </h:panelGrid>
+            <p:commandButton value="Registruj se" action="#{RegistracijaAdministrator.registracija()}" update="@form"/>   
+            </p:panel>
         </h:form>
     </h:body>
 </html>

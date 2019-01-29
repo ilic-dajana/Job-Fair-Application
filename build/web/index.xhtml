@@ -1,21 +1,35 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Job Fair dogadjaj</title>
+        <h:outputStylesheet library="css" name ="registration_style.css"/>
     </h:head>
     <h:body>
-        Izaberite svoju registraciju:
-        <br />
-        <h:link outcome="registracijaAdministrator" value="Registracija Administratora" />
-        <br />
-        <h:link outcome="registracijaStudent" value="Registracija Student" />
-        <br />
-        <h:link outcome="registracijaKompanija" value="Registracija Kompanija" />
-        <br></br>
-        Ukoliko imate nalog ulogujte se:
-        <h:link outcome="login" value="Uloguj se" />
+        <h:form id="pocetnaStrana" class="form">
+            <p:panel header="Pocetna strana" class="panel" >
+
+                Izaberite svoju registraciju:
+                <br />
+                <h:link outcome="registracijaAdministrator" value="Registracija Administratora" />
+                <br />
+                <h:link outcome="registracijaStudent" value="Registracija Student" />
+                <br />
+                <h:link outcome="registracijaKompanija" value="Registracija Kompanija" />
+                <br />
+                <h:link outcome="registracijaGost" value="Registracija Gost" />
+
+                <br></br>
+                Ukoliko imate nalog ulogujte se:
+                <h:link outcome="login" value="Uloguj se" />
+                <br/>
+                Ukoliko zelite da promenite lozinku:
+                <h:link outcome="promenalozinke" value="Promeni lozinku"/>
+
+            </p:panel>
+        </h:form>
     </h:body>
 </html>
 

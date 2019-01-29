@@ -5,9 +5,12 @@
  */
 package controllers;
 
+import java.io.Serializable;
 import java.sql.SQLException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import util.dao.UserDao;
 
 /**
@@ -16,17 +19,19 @@ import util.dao.UserDao;
  */
 @ManagedBean(name = "RegistracijaKompanija")
 @SessionScoped
-public class RegistracijaKompanija {
+public class RegistracijaKompanija implements Serializable {
     private String username;
     private String password, ponovljenPassword;
     private String email, sajt,grad, adresa, specijalnost,kompanija, ime, prezime;
     private int broj_zaposlenih,PIB;
-    private int delatnost;
+    private String delatnost;
     
     public String registracija() throws SQLException{
         try {
-            if(!UserDao.proveriUsername(username)){
-                return "registracijaKompanija";
+            if(UserDao.proveriUsername(username)){                
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, " Try another username", null));
+                return  null;
             }
             
             if(!UserDao.unesiKompaniju(username, password, kompanija, grad, adresa,ime, prezime, PIB, broj_zaposlenih, email, sajt, delatnost, specijalnost )){    
@@ -35,7 +40,7 @@ public class RegistracijaKompanija {
         } catch (SQLException ex) {            
             return "error";
         }
-        return "index";
+        return "login?faces-redirect=true";
     }
 
     public String getUsername() {
@@ -118,11 +123,11 @@ public class RegistracijaKompanija {
         this.PIB = PIB;
     }
 
-    public int getDelatnost() {
+    public String getDelatnost() {
         return delatnost;
     }
 
-    public void setDelatnost(int delatnost) {
+    public void setDelatnost(String delatnost) {
         this.delatnost = delatnost;
     }
 

@@ -1,0 +1,11 @@
+h1{
+    font-size: 3em;
+    color: blue;
+    text-align:center;
+    text-decoration:orangered;    
+}
+
+body{
+    background-image: url("jobfair.jpg");
+    background-color:activeborder;
+}

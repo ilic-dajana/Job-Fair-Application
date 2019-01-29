@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title> Promena lozinke </title>
+         <h:outputStylesheet library="css" name="registration_style.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="promenaLozinke" class="form">
+
+            <p:messages showDetail="false" autoUpdate="true"/>  
+            <p:panel header="Promena lozinke" class="panel">
+             <h:panelGrid columns="2" cellpadding="5">
+                   
+                    <p:outputLabel for="password" value="Password trenutni"/>
+                    <p:password id="passwordStari" value="#{RegistracijaStudent.password}"
+                                required="true" requiredMessage="Uneti stari password!"/>   
+                    <p:outputLabel for="passwordStari" value="Password novi:"/>
+                    <p:password id="password" value="#{RegistracijaStudent.password}"
+                                required="true" requiredMessage="Uneti novi password!"
+                                feedback="true" promptLabel="password strength"
+                                weakLabel="weak" goodLabel="good" strongLabel="strong"
+                                inline="true"/>   
+
+                    <p:outputLabel for="confirmPassword" value="Ponoviti novi password"/>
+                    <p:password id="confirmPassword" value="#{RegistracijaStudent.ponovljenPassword}"
+                                required="true" requiredMessage="Ponoviti password!"/>   
+           </h:panelGrid>
+                    
+                <p:commandButton value="Promeni lozinku" action="ControllerLogin.login()" update="@form"/>   
+                
+            </p:panel>
+        </h:form>
+
+    
+</h:body>
+</html>
+

@@ -1,208 +1,170 @@
 package util.dao;
 
+import beans.Administrator;
+import beans.Kompanija;
+import beans.Student;
+import beans.User;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.sql.PreparedStatement;
-import util.DB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import util.HibernateUtil;
 
 /**
  *
  * @author dajana
  */
 public class UserDao {
+   
     public static boolean proveriUsername(String username) throws SQLException{
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
-        try{
-            conn = DB.getInstance().getConnection();
-            if(conn == null)
-                return false;
-            ps = conn.prepareStatement("SELECT * FROM User WHERE username = ?");
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs.next())
-                return false;
-            else
-                return true;
-                   
-        }catch(Exception e){
-            return false;
-        }finally{
-            if(ps != null)
-                ps.close();
-            if(conn != null)
-                DB.getInstance().putConnection(conn);
-        }    
+       Session session = HibernateUtil.getSessionFactory().openSession();
+       Transaction tx = null;
+       try{
+           tx = session.beginTransaction();
+           String sqlquery="FROM User WHERE username =:username";
+           Query q = session.createQuery(sqlquery);
+           q.setString("username", username);
+           boolean exists = (q.uniqueResult() != null);
+           tx.commit();
+           return exists;
+       }catch(Exception e){
+           if(tx!= null)
+               tx.rollback();
+           e.printStackTrace();
+           return true;
+       }finally{
+           session.close();
+       }     
+       
     } 
-    
-    public static boolean unesiUser(String username, String password) throws SQLException{
-          Connection conn = null;
-        PreparedStatement ps = null;
-        
-        try{
-            conn = DB.getInstance().getConnection();
-            if(conn == null)
-                return false;
-            ps = conn.prepareStatement("INSERT INTO User(username, password) VALUES(?,?)");
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.executeUpdate();
-            return true;       
-        }catch(Exception e){
-            return false;
-        }finally{
-            if(ps != null)
-                ps.close();
-            if(conn != null)
-                DB.getInstance().putConnection(conn);
-        }    
-        
-    }
-    
-    public static int nadjiUserKljuc(String username) throws SQLException{
-      Connection conn = null;
-        PreparedStatement ps = null;
-        
-        try{
-            conn = DB.getInstance().getConnection();
-            if(conn == null)
-                return -1;
-            ps = conn.prepareStatement("SELECT id FROM User WHERE username = ?");
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs.next())
-                return rs.getInt("id");
-            else
-                return -1;
-                   
-        }catch(Exception e){
-            return -1;
-        }finally{
-            if(ps != null)
-                ps.close();
-            if(conn != null)
-                DB.getInstance().putConnection(conn);
-        }    
-    } 
-    
+   
     public static boolean unesiStudent(String username, String password, String ime, String prezime, 
-                                     int telefon, String email, int godStudija, int diplomirao) throws SQLException{
-        
-        boolean flag = unesiUser(username, password);
-        if(!flag)
-            return false;
-        int UserKey = nadjiUserKljuc(username);
-        
-        if(UserKey < 0)
-            return false;
-        
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
+                                     String telefon, String email, int godStudija, int diplomirao) throws SQLException{
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String pass = hasheFunc(password);
+        User user = new User(username, pass);
+        Student student = new Student(user, ime, prezime, telefon, email, godStudija, diplomirao);
+        user.setStudent(student);
         try{
-            conn = DB.getInstance().getConnection();
-            if(conn == null)
-                return false;
-            ps = conn.prepareStatement("INSERT INTO student(id, ime, prezime, telefon, email, godina_studija, diplomirao) VALUES(?,?,?,?,?,?,?)");
-            ps.setInt(1, UserKey);
-            ps.setString(2, ime);
-            ps.setString(3, prezime);
-            ps.setInt(4, telefon);
-            ps.setString(5, email);
-            ps.setInt(6, godStudija);
-            ps.setInt(7, diplomirao);
-            
-            ps.executeUpdate();
-            return true;       
+            tx = session.beginTransaction();
+            session.save(student);
+            tx.commit();
+            return true;
         }catch(Exception e){
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
             return false;
         }finally{
-            if(ps != null)
-                ps.close();
-            if(conn != null)
-                DB.getInstance().putConnection(conn);
-        }    
+            session.close();
+        }
     }
     
     public static boolean unesiAdministrator(String username, String password, String ime, String prezime, 
-                                     int telefon, String email) throws SQLException{
-        
-        boolean flag = unesiUser(username, password);
-        if(!flag)
-            return false;
-        int UserKey = nadjiUserKljuc(username);
-        
-        if(UserKey < 0)
-            return false;
-        
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
+                                     String telefon, String email) throws SQLException{
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String pass = hasheFunc(password);
+        User user = new User(username, pass);
+        Administrator admin = new Administrator(user, ime, prezime, telefon, email);
+        user.setAdministrator(admin);
         try{
-            conn = DB.getInstance().getConnection();
-            if(conn == null)
-                return false;
-            ps = conn.prepareStatement("INSERT INTO administrator(id, ime, prezime, telefon, email) VALUES(?,?,?,?,?)");
-            ps.setInt(1, UserKey);
-            ps.setString(2, ime);
-            ps.setString(3, prezime);
-            ps.setInt(4, telefon);
-            ps.setString(5, email);
-            
-            ps.executeUpdate();
-            return true;       
+            tx = session.beginTransaction();
+            session.save(admin);
+            tx.commit();
+            return true;
         }catch(Exception e){
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
             return false;
         }finally{
-            if(ps != null)
-                ps.close();
-            if(conn != null)
-                DB.getInstance().putConnection(conn);
-        }    
+            session.close();
+        }
+        
     }
     
     public static boolean unesiKompaniju(String username, String password, String kompanija,String grad, String adresa, String ime, String prezime, 
-                                     int PIB, int broj_zaposlenih, String email, String sajt, int delatnost, String specijalnost) throws SQLException{
-        
-        boolean flag = unesiUser(username, password);
-        if(!flag)
-            return false;
-        int UserKey = nadjiUserKljuc(username);
-        
-        if(UserKey < 0)
-            return false;
-        
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
+                                     int PIB, int broj_zaposlenih, String email, String sajt, String delatnost, String specijalnost) throws SQLException{
+       Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String pass = hasheFunc(password);
+        User user = new User(username, pass);
+        Kompanija kompan = new Kompanija(user, kompanija, adresa,ime, prezime, 
+                                PIB, broj_zaposlenih, email, sajt, delatnost, specijalnost,grad);
+       
+         user.setKompanija(kompan);
         try{
-            conn = DB.getInstance().getConnection();
-            if(conn == null)
-                return false;
-            ps = conn.prepareStatement("INSERT INTO kompanija(id, naziv,adresa, direktor_ime, direktor_prezime,"
-                    + " pib, brojZaposlenih, email, sajt, delatnost, specijalnost) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-            ps.setInt(1, UserKey);
-            ps.setString(2, kompanija);
-            ps.setString(3, adresa);
-            ps.setString(4, ime);
-            ps.setString(5, prezime);
-            ps.setInt(6, PIB);
-            ps.setInt(7, broj_zaposlenih);
-            ps.setString(8, email);
-            ps.setString(9, sajt);
-            ps.setInt(10, delatnost);
-            ps.setString(11, specijalnost);
-            ps.executeUpdate();
-            return true;       
+            tx = session.beginTransaction();
+            session.save(kompan);
+            tx.commit();
+            return true;
         }catch(Exception e){
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
             return false;
         }finally{
-            if(ps != null)
-                ps.close();
-            if(conn != null)
-                DB.getInstance().putConnection(conn);
+            session.close();
+        }
+        }   
+   
+    private static String hasheFunc(String password){
+        try {
+            MessageDigest msg = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = msg.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hash = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                String hex = Integer.toHexString(0xff & bytes[i]);
+                if (hex.length() == 1)
+                    hash.append('0');
+                hash.append(hex);
+            }
+            return hash.toString();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }    
     }
-}
+    
+    public static boolean proveriKorisnika(String username, String password){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String pass = hasheFunc(password);
+        try{
+           tx = session.beginTransaction();
+           String sqlquery="FROM User WHERE username =:username AND password =:password";
+           Query q = session.createQuery(sqlquery);
+           q.setString("username", username);
+           q.setString("password", pass);
+           boolean exists = (q.uniqueResult() != null);
+           tx.commit();
+           return exists;
+        }catch(Exception e){
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }finally{
+            session.close();
+        }     
+        
+        
+    }
+    
+    
+    
+    }
+

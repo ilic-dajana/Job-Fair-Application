@@ -1,11 +1,12 @@
 
 package controllers;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import util.dao.UserDao;
-import util.dao.UserLoginDao;
 
 /**
  *
@@ -13,24 +14,16 @@ import util.dao.UserLoginDao;
  */
 @ManagedBean(name = "ControllerLogin")
 @SessionScoped
-public class ControllerLogin {
+public class ControllerLogin implements Serializable {
     private String username, password;
-    private String msgUsername = "";
-    private String msgPassword = "";
     
     public String login(){
-        try {
-            /*if(!UserLoginDao.nadjiUsername(username)){
-                return "index";
-            }*/
-            
-            if(UserLoginDao.uporediPassword(username,password)){
-                return "proba";
-            }
-            return "error";
-        } catch (SQLException ex) {            
-            return "error";
-        }        
+        if(UserDao.proveriKorisnika(username, password)){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
+
+            return "proba?faces-redirect=true";
+        }
+      return "error?faces-redirect=true";
     }
 
     public String getUsername() {
@@ -49,22 +42,7 @@ public class ControllerLogin {
         this.password = password;
     }
 
-    public String getMsgUsername() {
-        return msgUsername;
-    }
-
-    public void setMsgUsername(String msgUsername) {
-        this.msgUsername = msgUsername;
-    }
-
-    public String getMsgPassword() {
-        return msgPassword;
-    }
-
-    public void setMsgPassword(String msgPassword) {
-        this.msgPassword = msgPassword;
-    }
-    
+   
     
     
 }

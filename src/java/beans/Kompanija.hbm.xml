@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 29, 2019 2:48:52 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Kompanija" table="kompanija" catalog="job_fair" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="foreign">
+                <param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user" class="beans.User" constrained="true"></one-to-one>
+        <property name="naziv" type="string">
+            <column name="naziv" length="45" not-null="true" />
+        </property>
+        <property name="adresa" type="string">
+            <column name="adresa" length="45" not-null="true" />
+        </property>
+        <property name="direktorIme" type="string">
+            <column name="direktor_ime" length="45" not-null="true" />
+        </property>
+        <property name="direktorPrezime" type="string">
+            <column name="direktor_prezime" length="45" not-null="true" />
+        </property>
+        <property name="pib" type="int">
+            <column name="pib" not-null="true" />
+        </property>
+        <property name="brojZaposlenih" type="int">
+            <column name="brojZaposlenih" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" not-null="true" />
+        </property>
+        <property name="sajt" type="string">
+            <column name="sajt" length="45" not-null="true" />
+        </property>
+        <property name="delatnost" type="string">
+            <column name="delatnost" length="45" not-null="true" />
+        </property>
+        <property name="specijalnost" type="string">
+            <column name="specijalnost" length="45" not-null="true" />
+        </property>
+        <property name="grad" type="string">
+            <column name="grad" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -2,79 +2,85 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title> Registracija Kompanija</title>
+        <h:outputStylesheet library="css" name="registration_style.css"/>
     </h:head>
     <h:body>
-         <h:form>
-            <h:panelGrid columns="3">
-                <h:outputText value="Username:"/>
-                <h:inputText value="#{RegistracijaKompanija.username}"/>
-                <h:outputText value=""/>
+         <h:form id="kompanijaRegistracija" class="form">
+             <p:messages showDetail="false" autoUpdate="true"/>
+             <p:panel header="Registracija Kompanije" class="panel">
+             <h:panelGrid columns="2" cellpadding="5" >
+                 <p:outputLabel for="username" value="Username:"/>
                 
-                <h:outputText value="Password:"/>
-                <h:inputText value="#{RegistracijaKompanija.password}"/>   
-                <h:outputText value=""/>
-                
-                <h:outputText value="Ponoviti password: "/>
-                <h:inputText value="#{RegistracijaKompanija.ponovljenPassword}"/>   
-                <h:outputText value=""/>
+                 <p:inputText id="username" value="#{RegistracijaKompanija.username}"
+                             required="true" requiredMessage="Uneti username!"/>
                
-                <h:outputText value="Naziv kompanije: "/>
-                <h:inputText value ="#{RegistracijaKompanija.kompanija}"/>
-                <h:outputText value=""/>
-            
-                <h:outputText value="grad"/>
-                <h:inputText value ="#{RegistracijaKompanija.grad}"/>
-                <h:outputText value=""/>
+                
+                <p:outputLabel for="password" value="Password:"/>
+                <p:password id="password" value="#{RegistracijaKompanija.password}"
+                            required="true" requiredMessage="Uneti password!"
+                            feedback="true" promptLabel="password strength"
+                            weakLabel="weak" goodLabel="good" strongLabel="strong"
+                            inline="true"/>   
+               
+                <p:outputLabel for="confirmPassword" value="Ponoviti password:"/>
+                <p:password id="confirmPassword" value="#{RegistracijaKompanija.ponovljenPassword}"
+                            required="true" requiredMessage="Ponoviti password!"/>   
+                <p:outputLabel for="naziv" value="Naziv kompanije:"/>
+                <p:inputText id="naziv" value ="#{RegistracijaKompanija.kompanija}"
+                             required="true" requiredMessage="Uneti kompaniju!"/>
+                 
+                <p:outputLabel for="grad" value="Grad:"/>
+                <p:inputText id="grad" value ="#{RegistracijaKompanija.grad}"
+                             required="true" requiredMessage="Uneti grad!"/>
+                
+                <p:outputLabel for="adresa" value="Adresa:"/>
+                <p:inputText id="adresa" value ="#{RegistracijaKompanija.adresa}"
+                             required="true" requiredMessage="Uneti adresu!"/>
+                
+                <p:outputLabel for="imeDirektora" value="Ime direktora:"/>
+                <p:inputText id="imeDirektora" value ="#{RegistracijaKompanija.ime}"
+                             required="true" requiredMessage="Uneti ime direktora!"/>
+               
+                <p:outputLabel for="prezimeDirektora" value="Prezime:"/>
+                <p:inputText id="prezimeDirektora" value ="#{RegistracijaKompanija.prezime}"
+                             required="true" requiredMessage="Uneti prezime direktora!"/>
+             
+                <p:outputLabel for="pib" value="PIB:"/>
+                <p:inputText id="pib" value ="#{RegistracijaKompanija.PIB}"
+                             required="true" requiredMessage="Uneti PIB!"/>                
               
-                <h:outputText value ="adresa"/>
-                <h:inputText value="#{RegistracijaKompanija.adresa}"/>
-                <h:outputText value=""/>
+                <p:outputLabel for="brojZaposlenih" value="Broj zaposlenih:"/>
+                <p:inputText id="brojZaposlenih" value ="#{RegistracijaKompanija.broj_zaposlenih}"
+                             required="true" requiredMessage="Uneti broj zaposlenih!"/>
+                
+                <p:outputLabel for="email" value="E-mail:"/>
+                <p:inputText id="email" value ="#{RegistracijaKompanija.email}"
+                             required="true" requiredMessage="Uneti email!"/>
                
-                <h:outputText value="Ime direktora"/>
-                <h:inputText value = "#{RegistracijaKompanija.ime}"/>
-                <h:outputText value=""/>
-                
-                <h:outputText value="Prezime direktora"/>
-                <h:inputText value = "#{RegistracijaKompanija.prezime}"/>
-                <h:outputText value=""/>
-                
-                <h:outputText value="PIB"/>
-                <h:inputText value = "#{RegistracijaKompanija.PIB}"/>
-                <h:outputText value=""/>
-                
-                <h:outputText value="Broj zaposlenih:"/>
-                <h:inputText value = "#{RegistracijaKompanija.broj_zaposlenih}"/>
-                <h:outputText value=""/>
-                
-                <h:outputText value="E-mail:"/>
-                <h:inputText value = "#{RegistracijaKompanija.email}"/>
-                <h:outputText value=""/>
-                
-                <h:outputText value="Web-sajt:"/>
-                <h:inputText value = "#{RegistracijaKompanija.sajt}"/>
-                <h:outputText value=""/>
-                
-                
-                
-                <h:outputText value="Delatnost firme:"/>
-                <h:selectOneMenu value="#{RegistracijaKompanija.delatnost}">
+                <p:outputLabel for="sajt" value="Web-sajt:"/>
+                <p:inputText id="sajt" value ="#{RegistracijaKompanija.sajt}"
+                             required="true" requiredMessage="Uneti sajt!"/>
+                                              
+                <p:outputLabel for="firma" value="Delatnost firme:"/>
+                <p:selectOneMenu id="firma" value="#{RegistracijaKompanija.delatnost}" >
+                 <br/>   <f:selectItem itemValue="1" itemLabel="Prva godina" />
                     <f:selectItem itemValue="0" itemLabel="IT" />
                     <f:selectItem itemValue="1" itemLabel="Telekomunikacije" />
                     <f:selectItem itemValue="2" itemLabel="Energetika" />
                     <f:selectItem itemValue="3" itemLabel="Gradjevina i arhitektura" />
                     <f:selectItem itemValue="4" itemLabel="Masinstvo" />                    
-                </h:selectOneMenu>
-                <h:outputText value=""/>
+                </p:selectOneMenu>
               
-                <h:outputText value="Specijalnost"/>
-                <h:inputText value = "#{RegistracijaKompanija.specijalnost}"/>
-                <h:outputText value=""/>
-                    
-                <h:commandButton value="Registruj se" action="#{RegistracijaKompanija.registracija()}"/>   
-            </h:panelGrid>
+                <p:outputLabel value="Specijalnost"/>
+                <p:inputText value = "#{RegistracijaKompanija.specijalnost}"
+                             required="true" requiredMessage="Uneti specijalnost!"/>
+                 </h:panelGrid>   
+                <p:commandButton value="Registruj se" action="#{RegistracijaKompanija.registracija()}" update="@form"/>   
+             </p:panel>
         </h:form>
     </h:body>
 </html>

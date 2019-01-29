@@ -1,0 +1,17 @@
+body{
+    background-color:appworkspace;
+}
+
+.form{
+    max-width: 470px;
+    margin:auto;
+    padding:5px;
+}
+
+.panel{
+    background-color:aquamarine;
+    border-style:inherit;
+    border-color: black;
+    border-width: 3px;
+}
+
