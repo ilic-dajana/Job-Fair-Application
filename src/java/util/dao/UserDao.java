@@ -4,16 +4,30 @@ import beans.Administrator;
 import beans.Kompanija;
 import beans.Student;
 import beans.User;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.sql.PreparedStatement;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import util.HibernateUtil;
 
@@ -21,6 +35,9 @@ import util.HibernateUtil;
  *
  * @author dajana
  */
+
+@ManagedBean(name = "UserDao")
+@SessionScoped
 public class UserDao {
    
     public static boolean proveriUsername(String username) throws SQLException{
@@ -118,7 +135,37 @@ public class UserDao {
         }finally{
             session.close();
         }
-        }   
+        } 
+    
+    public static boolean promeniPassword(String username, String oldPass, String newPass){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String pass = hasheFunc(newPass);
+        
+        try{
+           tx = session.beginTransaction();
+           String sqlquery="SELECT u.id FROM User u WHERE username =:username";
+           Query q = session.createQuery(sqlquery);
+           q.setString("username", username);
+           Object result = q.uniqueResult();
+           int id = (int) result;
+           User user = (User) session.get(User.class, id);          
+           user.setPassword(pass);
+           session.update(user); 
+         tx.commit();
+         return true;
+        }catch(Exception e){
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }finally{
+            session.close();
+        } 
+    }
+    
+    
    
     private static String hasheFunc(String password){
         try {
@@ -159,11 +206,8 @@ public class UserDao {
             return false;
         }finally{
             session.close();
-        }     
-        
-        
+        } 
     }
-    
     
     
     }

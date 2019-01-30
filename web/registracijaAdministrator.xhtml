@@ -12,7 +12,7 @@
         <h:form id="adminRegistracija" class="form">
             <p:messages showDetail="false" autoUpdate="true"/>
            
-            <p:panel header="Registracija Administratora" class="panel"> 
+            <p:panel id="panel" header="Registracija Administratora" class="panel"> 
             <h:panelGrid columns="2" cellpadding="5">
                 <p:outputLabel for="username" value="Username:"/>
                 <p:inputText id="username" value="#{RegistracijaAdministrator.username}"
@@ -44,10 +44,17 @@
                 <p:outputLabel for="email" value="E-mail:"/>
                 <p:inputText id="email" value = "#{RegistracijaAdministrator.email}"
                              required="true" requiredMessage="Uneti email!"/>
+                  
+             <p:fileUpload fileUploadListener="#{UserDao.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                         label="Izaberi sliku"
+                 auto="90000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+            
                 
             </h:panelGrid>
-            <p:commandButton value="Registruj se" action="#{RegistracijaAdministrator.registracija()}" update="@form"/>   
-            </p:panel>
+                <p:commandButton value="Registruj se"  action="#{RegistracijaAdministrator.registracija()}" update="@form">
+                 
+            </p:commandButton>
+            </p:panel>            
         </h:form>
     </h:body>
 </html>

@@ -20,15 +20,40 @@ import util.dao.KompanijaDao;
 @ManagedBean(name = "RegistracijaGost")
 @SessionScoped
 public class RegistracijaGost implements Serializable {
-    public String imeKompanije;
+    public String imeKompanije, grad, delatnost;
     public List<Kompanija> kompanije;
     
     
-    public String pretrazi(){      
-        kompanije = KompanijaDao.pretraziKompanije(imeKompanije);
-        
-        return "proba";
+    public void pretraziIme(){      
+        kompanije = KompanijaDao.pretraziKompanijePoImenu(imeKompanije);     
     }
+    
+    public void pretraziGrad(){
+        kompanije = KompanijaDao.pretraziKompanijePoGradu(grad);
+    }
+    
+    public void pretraziDelatnost(){
+        kompanije = KompanijaDao.pretraziKompanijePoDelatnosti(delatnost);
+    }
+
+    public String getDelatnost() {
+        return delatnost;
+    }
+
+    public void setDelatnost(String delatnost) {
+        this.delatnost = delatnost;
+    }
+
+    
+    
+    public String getGrad() {
+        return grad;
+    }
+
+    public void setGrad(String grad) {
+        this.grad = grad;
+    }
+    
     
     
     public RegistracijaGost(String ime){

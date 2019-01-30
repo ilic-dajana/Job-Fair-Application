@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jan 29, 2019 2:48:52 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Jan 30, 2019 12:13:19 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="beans.Kompanija" table="kompanija" catalog="job_fair" optimistic-lock="version">
         <id name="id" type="int">

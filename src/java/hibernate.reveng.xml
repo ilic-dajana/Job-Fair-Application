@@ -43,6 +43,6 @@ Contributor(s):
   <schema-selection match-catalog="job_fair"/>
   <table-filter match-name="kompanija"/>
   <table-filter match-name="administrator"/>
-  <table-filter match-name="User"/>
   <table-filter match-name="student"/>
+  <table-filter match-name="User"/>
 </hibernate-reverse-engineering>

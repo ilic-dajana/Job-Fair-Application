@@ -14,22 +14,25 @@
             <p:panel header="Promena lozinke" class="panel">
              <h:panelGrid columns="2" cellpadding="5">
                    
-                    <p:outputLabel for="password" value="Password trenutni"/>
-                    <p:password id="passwordStari" value="#{RegistracijaStudent.password}"
-                                required="true" requiredMessage="Uneti stari password!"/>   
-                    <p:outputLabel for="passwordStari" value="Password novi:"/>
-                    <p:password id="password" value="#{RegistracijaStudent.password}"
+                    <p:outputLabel for="username" value="Username: "/>
+                    <p:inputText id="username" value="#{ControllerPassword.username}"
+                                required="true" requiredMessage="Uneti username!"/>   
+                    <p:outputLabel for="passwordStari" value="Password stari:"/>
+                    <p:password id="passwordStari" value="#{ControllerPassword.oldPassword}"
+                                required="true" requiredMessage="Upisati stari password!"/>
+                    <p:outputLabel for="passwordNovi" value="Password novi:"/>
+                    <p:password id="passwordNovi" value="#{ControllerPassword.newPassword}"
                                 required="true" requiredMessage="Uneti novi password!"
                                 feedback="true" promptLabel="password strength"
                                 weakLabel="weak" goodLabel="good" strongLabel="strong"
-                                inline="true"/>   
+                                inline="true" match="confirmPassword"/>   
 
                     <p:outputLabel for="confirmPassword" value="Ponoviti novi password"/>
-                    <p:password id="confirmPassword" value="#{RegistracijaStudent.ponovljenPassword}"
+                    <p:password id="confirmPassword" value="#{ControllerPassword.confirmNewPassword}"
                                 required="true" requiredMessage="Ponoviti password!"/>   
            </h:panelGrid>
                     
-                <p:commandButton value="Promeni lozinku" action="ControllerLogin.login()" update="@form"/>   
+                <p:commandButton value="Promeni lozinku" action="#{ControllerPassword.changePassword()}" update="@form"/>   
                 
             </p:panel>
         </h:form>
