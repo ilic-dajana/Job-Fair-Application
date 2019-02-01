@@ -4,6 +4,7 @@ import beans.Administrator;
 import beans.Kompanija;
 import beans.Student;
 import beans.User;
+import controllers.RegistracijaStudent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,8 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -62,79 +65,86 @@ public class UserDao {
        
     } 
    
-    public static boolean unesiStudent(String username, String password, String ime, String prezime, 
+    public static String unesiStudent(String username, String password, String ime, String prezime, 
                                      String telefon, String email, int godStudija, int diplomirao) throws SQLException{
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        String pass = hasheFunc(password);
-        User user = new User(username, pass);
-        Student student = new Student(user, ime, prezime, telefon, email, godStudija, diplomirao);
-        user.setStudent(student);
-        try{
-            tx = session.beginTransaction();
-            session.save(student);
-            tx.commit();
-            return true;
-        }catch(Exception e){
-            if(tx != null){
-                tx.rollback();
+        String message = proveriPassword(password);        
+        if(message ==""){
+            String pass = hasheFunc(password);
+            User user = new User(username, pass);
+            Student student = new Student(user, ime, prezime, telefon, email, godStudija, diplomirao);
+            user.setStudent(student);
+            try{
+                tx = session.beginTransaction();
+                session.save(student);
+                tx.commit();
+            }catch(Exception e){
+                if(tx != null){
+                    tx.rollback();
+                }
+                e.printStackTrace();
+                
+            }finally{
+                session.close();
             }
-            e.printStackTrace();
-            return false;
-        }finally{
-            session.close();
         }
+        return message;
     }
     
-    public static boolean unesiAdministrator(String username, String password, String ime, String prezime, 
+    public static String unesiAdministrator(String username, String password, String ime, String prezime, 
                                      String telefon, String email) throws SQLException{
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        String pass = hasheFunc(password);
-        User user = new User(username, pass);
-        Administrator admin = new Administrator(user, ime, prezime, telefon, email);
-        user.setAdministrator(admin);
-        try{
-            tx = session.beginTransaction();
-            session.save(admin);
-            tx.commit();
-            return true;
-        }catch(Exception e){
-            if(tx != null){
-                tx.rollback();
+        String message = proveriPassword(password);        
+        if(message ==""){
+            String pass = hasheFunc(password);
+            User user = new User(username, pass);
+            Administrator admin = new Administrator(user, ime, prezime, telefon, email);
+            user.setAdministrator(admin);
+            try{
+                tx = session.beginTransaction();
+                session.save(admin);
+                tx.commit();
+            }catch(Exception e){
+                if(tx != null){
+                    tx.rollback();
+                }
+                e.printStackTrace();
+            }finally{
+                session.close();
             }
-            e.printStackTrace();
-            return false;
-        }finally{
-            session.close();
         }
+        return message;
         
     }
     
-    public static boolean unesiKompaniju(String username, String password, String kompanija,String grad, String adresa, String ime, String prezime, 
+    public static String unesiKompaniju(String username, String password, String kompanija,String grad, String adresa, String ime, String prezime, 
                                      int PIB, int broj_zaposlenih, String email, String sajt, String delatnost, String specijalnost) throws SQLException{
        Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        String pass = hasheFunc(password);
-        User user = new User(username, pass);
-        Kompanija kompan = new Kompanija(user, kompanija, adresa,ime, prezime, 
-                                PIB, broj_zaposlenih, email, sajt, delatnost, specijalnost,grad);
-       
-         user.setKompanija(kompan);
-        try{
-            tx = session.beginTransaction();
-            session.save(kompan);
-            tx.commit();
-            return true;
-        }catch(Exception e){
-            if(tx != null){
-                tx.rollback();
+        String message = proveriPassword(password);        
+        if(message ==""){
+            String pass = hasheFunc(password);
+            User user = new User(username, pass);
+            Kompanija kompan = new Kompanija(user, kompanija, adresa,ime, prezime, 
+                                    PIB, broj_zaposlenih, email, sajt, delatnost, specijalnost,grad);
+
+             user.setKompanija(kompan);
+            try{
+                tx = session.beginTransaction();
+                session.save(kompan);
+                tx.commit();
+            }catch(Exception e){
+                if(tx != null){
+                    tx.rollback();
+                }
+                e.printStackTrace();
+            }finally{
+                session.close();
             }
-            e.printStackTrace();
-            return false;
-        }finally{
-            session.close();
         }
+        return message;
         } 
     
     public static boolean promeniPassword(String username, String oldPass, String newPass){
@@ -207,6 +217,56 @@ public class UserDao {
         }finally{
             session.close();
         } 
+    }
+    public static int[] brojacSlovaIBrojeva(String password){
+        int counter[] = { 0, 0, 0, 0};
+        for(int i = 0; i < password.length(); i++){
+            if(Character.isLowerCase(password.charAt(i))){
+                counter[0]++;
+            }
+            if(Character.isUpperCase(password.charAt(i))){
+                counter[1]++;
+            }
+            if(Character.isDigit(password.charAt(i))){
+                counter[2]++;
+            }
+            if(password.charAt(i) == '#' || password.charAt(i) == '*' || password.charAt(i) == '!'
+                 ||   password.charAt(i) == '?' || password.charAt(i) == '$' || password.charAt(i) == '.'){
+                counter[3]++;
+            }
+        }
+        
+        return counter;
+    }
+    
+    public static String proveriPassword(String password){
+        int counter []= new int[4];
+        counter = brojacSlovaIBrojeva(password);
+        
+        if(12 >= password.length() && password.length() >= 8){
+            if(counter[0] >= 3){
+                if(counter[1] >= 1){
+                    if(counter[2] >= 1){
+                        if(counter[3] >= 1){
+                           if(Character.isLetter(password.charAt(0))){
+                               return "";
+                           }
+                           else
+                               return "Password mora poceti slovnim karakterom!";
+                        }
+                        else
+                            return "Password mora imati bar jedan specijalni karakter iz skupa {#,!,*,.,?,$}";
+                    }
+                    else
+                       return "Password mora imati bar 1 numerik!";
+                }
+                else
+                    return "Password mora imati bar 1 veliko slovo!";
+            }else
+                return "Password mora imati bar 3 mala slova!";
+        }else
+            return "Duzina passworda mora biti izmedju 8 i 12 karaktera!";
+       
     }
     
     

@@ -8,11 +8,24 @@
         <title> Registracija Kompanija</title>
         <h:outputStylesheet library="css" name="registration_style.css"/>
     </h:head>
-    <h:body>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem">
+            <h:form class="form">
+            <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                    </f:facet>
+                    <f:facet name="right">
+                        <p:commandButton  value="Sign Out" action="#{ControllerPage.login()}"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>
+        </div>
          <h:form id="kompanijaRegistracija" class="form">
+              
              <p:messages showDetail="false" autoUpdate="true"/>
              <p:panel header="Registracija Kompanije" class="panel">
-             <h:panelGrid columns="2" cellpadding="5" >
+             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
                  <p:outputLabel for="username" value="Username:"/>
                 
                  <p:inputText id="username" value="#{RegistracijaKompanija.username}"
@@ -68,18 +81,23 @@
                 <p:outputLabel for="firma" value="Delatnost firme:"/>
                 <p:selectOneMenu id="firma" value="#{RegistracijaKompanija.delatnost}" >
                  <br/>  
-                    <f:selectItem itemValue="0" itemLabel="IT" />
-                    <f:selectItem itemValue="1" itemLabel="Telekomunikacije" />
-                    <f:selectItem itemValue="2" itemLabel="Energetika" />
-                    <f:selectItem itemValue="3" itemLabel="Gradjevina i arhitektura" />
-                    <f:selectItem itemValue="4" itemLabel="Masinstvo" />                    
+                    <f:selectItem itemValue="IT" itemLabel="IT" />
+                    <f:selectItem itemValue="Telekomunikacije" itemLabel="Telekomunikacije" />
+                    <f:selectItem itemValue="Energetika" itemLabel="Energetika" />
+                    <f:selectItem itemValue="Gradjevina i arhitektura" itemLabel="Gradjevina i arhitektura" />
+                    <f:selectItem itemValue="Masinstvo" itemLabel="Masinstvo" />                    
                 </p:selectOneMenu>
               
                 <p:outputLabel value="Specijalnost"/>
                 <p:inputText value = "#{RegistracijaKompanija.specijalnost}"
                              required="true" requiredMessage="Uneti specijalnost!"/>
-                 </h:panelGrid>   
-                <p:commandButton value="Registruj se" action="#{RegistracijaKompanija.registracija()}" update="@form"/>   
+                 </p:panelGrid>  
+                      
+             <p:fileUpload fileUploadListener="#{PictureDao.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                         label="Dodaj sliku"
+                 auto="90000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+            
+                <p:commandButton value="Registruj se"  action="#{RegistracijaKompanija.registracija()}" update="@form"/>   
              </p:panel>
         </h:form>
     </h:body>

@@ -20,7 +20,8 @@ import util.dao.KompanijaDao;
 @ManagedBean(name = "RegistracijaGost")
 @SessionScoped
 public class RegistracijaGost implements Serializable {
-    public String imeKompanije, grad, delatnost;
+    public String imeKompanije, grad;
+    public String[] delatnost;
     public List<Kompanija> kompanije;
     
     
@@ -36,11 +37,11 @@ public class RegistracijaGost implements Serializable {
         kompanije = KompanijaDao.pretraziKompanijePoDelatnosti(delatnost);
     }
 
-    public String getDelatnost() {
+    public String[] getDelatnost() {
         return delatnost;
     }
 
-    public void setDelatnost(String delatnost) {
+    public void setDelatnost(String[] delatnost) {
         this.delatnost = delatnost;
     }
 

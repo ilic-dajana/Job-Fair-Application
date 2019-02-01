@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Job Fair dogadjaj</title>
           
@@ -15,34 +16,29 @@
             <p:panel header="Pocetna strana" class="panel" >
 
                 <h4>Nemate nalog?Registruj se kao:</h4>
+               <p:panelGrid columns="3" styleClass="ui-panelgrid-blank ui-fluid" columnClasses="left,centered,right">
+                <p:commandButton value="Admin" style="width:120px;height:35px" action="#{ControllerPage.admin()}" update="@form"/>
+                <p:commandButton value="Student" style="width:120px;height:35px" action="#{ControllerPage.student()}" update="@form"/>
+                <p:commandButton value="Kompanija" style="width:120px;height:35px" action="#{ControllerPage.kompanija()}" update="@form"/>               
                 
-                <p:commandButton value="Administrator" action="#{ControllerPage.admin()}" update="@form"/>
-                &nbsp;
-                <p:commandButton value="Student" action="#{ControllerPage.student()}" update="@form"/>
-                &nbsp;
-                <p:commandButton value="Kompanija" action="#{ControllerPage.kompanija()}" update="@form"/>               
-                
+               </p:panelGrid>
+                <p:commandLink  value="Pristupite kao gost" style="text-decoration:none;color:blue; width:150px;"  action="registracijaGost?faces-redirect=true" />
 
-               
-                <br/>
-                <p:commandLink action="registracijaGost" style="text-decoration:none;color:blue;" value="Bez registracije?Pristupite kao gost" />
                 
+                               
                 <br/>
                 <h4>Ukoliko imate nalog ulogujte se:</h4>
-                <h:panelGrid columns="2" cellpadding="5">             
+               <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
                     <p:outputLabel for="idUsername" value="Username:"/>
                     <p:inputText id="idUsername" value="#{ControllerLogin.username}"/>
 
 
                     <p:outputLabel value="Password:"/>
-                    <p:password value="#{ControllerLogin.password}"/>   
-                </h:panelGrid>
-                &nbsp;
+                    <p:password value="#{ControllerLogin.password}"/>  
+                 <p:commandLink action="promenalozinke?faces-redirect=true" style="text-decoration:none;color:blue;" value="Promeni lozinku"/>
                 <p:commandButton value="Uloguj se" style="float:right;" action="#{ControllerLogin.login()}" update="@form"/>   
-
-               
-                <p:commandLink action="promenalozinke" style="text-decoration:none;color:blue;" value="Promeni lozinku"/>
                 
+                </p:panelGrid>    
             </p:panel>
         </h:form>
     </h:body>

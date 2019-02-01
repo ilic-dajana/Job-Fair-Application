@@ -63,15 +63,20 @@ public class KompanijaDao {
        }    
     }
       
-         public static List<Kompanija> pretraziKompanijePoDelatnosti(String name){
-         Session session = HibernateUtil.getSessionFactory().openSession();
+    public static List<Kompanija> pretraziKompanijePoDelatnosti(String[] delatnosti){
+       Session session = HibernateUtil.getSessionFactory().openSession();
        Transaction tx = null;
        try{
-           tx = session.beginTransaction();
-           String sqlquery="FROM Kompanija WHERE delatnost LIKE :pattern";
+          List<Kompanija> kompanije = new ArrayList<>();
+           
+          tx = session.beginTransaction();
+          for(int i =0; i<delatnosti.length; i++){
+           String sqlquery="FROM Kompanija WHERE delatnost= :d0";
            Query q = session.createQuery(sqlquery);
-           q.setString("pattern", "%" + name + "%");
-           List<Kompanija> kompanije = q.list() ;
+           q.setString("d0", delatnosti[i]);
+           kompanije.addAll(q.list());
+          }        
+                         
            tx.commit();
            return kompanije;
        }catch(Exception e){

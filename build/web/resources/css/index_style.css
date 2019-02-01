@@ -12,12 +12,11 @@ h1 {
 .form{
     max-width: 470px;
     margin:auto;
-    padding:5px;
 }
 
 .panel{
     background-color:lightgray;
     border-style:inherit;
     border-color: black;
-    border-width: 3px;
 }
+

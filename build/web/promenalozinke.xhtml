@@ -2,17 +2,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title> Promena lozinke </title>
          <h:outputStylesheet library="css" name="registration_style.css"/>
     </h:head>
-    <h:body>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem">
+            <h:form class="form">
+            <p:toolbar id="tbL">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                    </f:facet>                   
+                </p:toolbar> 
+            </h:form>
+        </div>
         <h:form id="promenaLozinke" class="form">
 
             <p:messages showDetail="false" autoUpdate="true"/>  
             <p:panel header="Promena lozinke" class="panel">
-             <h:panelGrid columns="2" cellpadding="5">
+             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
                    
                     <p:outputLabel for="username" value="Username: "/>
                     <p:inputText id="username" value="#{ControllerPassword.username}"
@@ -30,7 +40,7 @@
                     <p:outputLabel for="confirmPassword" value="Ponoviti novi password"/>
                     <p:password id="confirmPassword" value="#{ControllerPassword.confirmNewPassword}"
                                 required="true" requiredMessage="Ponoviti password!"/>   
-           </h:panelGrid>
+           </p:panelGrid>
                     
                 <p:commandButton value="Promeni lozinku" action="#{ControllerPassword.changePassword()}" update="@form"/>   
                 

@@ -28,4 +28,11 @@ public class ControllerPage {
     public String kompanija(){
         return "registracijaKompanija?faces-redirect=true";
     }
+    public String home(){
+        return "index?faces-redirect=true";
+    }
+    
+    public String login(){
+         return "login?faces-redirect=true";
+    }
 }

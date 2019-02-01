@@ -8,14 +8,24 @@
         <title>Registracija Student</title>
         <h:outputStylesheet library="css" name="registration_style.css"/>
     </h:head>
-    <h:body>
-        <h:form id="studentRegistracija" class="form">
-
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem">
+            <h:form class="form">
+            <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton value="Home" action="#{ControllerPage.home()}"/>
+                    </f:facet>
+                    <f:facet name="right">
+                        <p:commandButton  value="Sign Out" action="#{ControllerPage.login()}"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>
+        </div>
+        <h:form id="studentRegistracija" class="form">             
             <p:messages showDetail="false" autoUpdate="true"/>  
             <p:panel header="Registracija Student" class="panel">
-            <h:panelGrid columns="2" cellpadding="5">
-                
-                <p:outputLabel for="username" value="Username:"/>
+            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid"  >
+                <p:outputLabel for="username" value="Username:" />
                 <p:inputText id="username" value="#{RegistracijaStudent.username}"
                              required="true" requiredMessage="Uneti username!"/>
                
@@ -26,13 +36,13 @@
                             feedback="true" promptLabel="password strength"
                             weakLabel="weak" goodLabel="good" strongLabel="strong"
                             inline="true" match="confirmPassword"/>   
-               
+                 
                 <p:outputLabel for="confirmPassword" value="Ponoviti password"/>
                 <p:password id="confirmPassword" value="#{RegistracijaStudent.ponovljenPassword}"
                             required="true" requiredMessage="Ponoviti password!"/>   
                
-                <p:outputLabel for="name" value="Ime:"/>
-                <p:inputText id="name" value ="#{RegistracijaStudent.ime}"
+                <p:outputLabel for="ime" value="Ime:"/>
+                <p:inputText id="ime" value ="#{RegistracijaStudent.ime}"
                              required="true" requiredMessage="Uneti ime!"/>
             
                 <p:outputLabel for="prezime" value="Prezime:"/>
@@ -59,11 +69,14 @@
                     <f:selectItem itemValue="2" itemLabel="Druga godina" />
                     <f:selectItem itemValue="3" itemLabel="Treca godina" />
                     <f:selectItem itemValue="4" itemLabel="Cetvrta godina" />
-                    <f:selectItem itemValue="5" itemLabel="Peta(master) godina" />
+                    <f:selectItem itemValue="5" itemLabel="Peta godina" />
                  </p:selectOneRadio>
-                </h:panelGrid>
-                    
-                <p:commandButton value="Registruj se" action="#{RegistracijaStudent.registracija()}" update="@form"/>   
+                </p:panelGrid>
+                   <p:fileUpload fileUploadListener="#{PictureDao.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                         label="Dodaj sliku"
+                 auto="90000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+             
+                <p:commandButton value="Registruj se"  action="#{RegistracijaStudent.registracija()}" update="@form"/>   
                 </p:panel>
         </h:form>
             

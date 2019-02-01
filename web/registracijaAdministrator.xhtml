@@ -2,58 +2,67 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Registracija Administrator</title>
         <h:outputStylesheet library="css" name="registration_style.css"/>
     </h:head>
-    
-    <h:body>
-        <h:form id="adminRegistracija" class="form">
+
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem">
+            <h:form class="form">
+            <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                    </f:facet>
+                    <f:facet name="right">
+                        <p:commandButton  value="Sign Out" action="#{ControllerPage.login()}"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>
+        </div>
+        <h:form id="adminRegistracija" class="form">             
             <p:messages showDetail="false" autoUpdate="true"/>
-           
+
             <p:panel id="panel" header="Registracija Administratora" class="panel"> 
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:outputLabel for="username" value="Username:"/>
-                <p:inputText id="username" value="#{RegistracijaAdministrator.username}"
-                             required="true" requiredMessage="Uneti username!"/>
-                                
-                <p:outputLabel for="password" value="Password:"/>
-                <p:password id="password" value="#{RegistracijaAdministrator.password}"
-                             required="true" requiredMessage="Uneti password!"
-                             feedback="true" promptLabel="Password strength"
-                             weakLabel="weak" goodLabel="good" strongLabel="strong" inline="true" match="confirmPassword" />   
-                
-                <p:outputLabel for="confirmPassword" value="Ponoviti password"/>
-                <p:password id="confirmPassword" value="#{RegistracijaAdministrator.ponovljenPassword}"
-                            required="true" requiredMessage="Ponoviti password!"/>
-                          
-               
-                <p:outputLabel for="name" value="Ime:"/>
-                <p:inputText  id="name" value ="#{RegistracijaAdministrator.ime}"
-                              required="true" requiredMessage="Uneti ime!"/>
-            
-                <p:outputLabel for="lastname" value="Prezime:"/>
-                <p:inputText id="lastname" value ="#{RegistracijaAdministrator.prezime}"
-                             required="true" requiredMessage="Uneti prezime!"/>
-              
-                <p:outputLabel for="phone" value ="Kontakt telefon:"/>
-                <p:inputText id="phone" value="#{RegistracijaAdministrator.telefon}"
-                             required="true" requiredMessage="Uneti broj telefona!"/>
-               
-                <p:outputLabel for="email" value="E-mail:"/>
-                <p:inputText id="email" value = "#{RegistracijaAdministrator.email}"
-                             required="true" requiredMessage="Uneti email!"/>
-                  
-             <p:fileUpload fileUploadListener="#{UserDao.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                         label="Izaberi sliku"
-                 auto="90000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-            
-                
-            </h:panelGrid>
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+                    <p:outputLabel for="username" value="Username:"/>
+                    <p:inputText id="username" value="#{RegistracijaAdministrator.username}"
+                                 required="true" requiredMessage="Uneti username!"/>
+
+                    <p:outputLabel for="password" value="Password:"/>
+                    <p:password id="password" value="#{RegistracijaAdministrator.password}"
+                                required="true" requiredMessage="Uneti password!"
+                                feedback="true" promptLabel="Password strength"
+                                weakLabel="weak" goodLabel="good" strongLabel="strong" inline="true" match="confirmPassword" />   
+
+                    <p:outputLabel for="confirmPassword" value="Ponoviti password"/>
+                    <p:password id="confirmPassword" value="#{RegistracijaAdministrator.ponovljenPassword}"
+                                required="true" requiredMessage="Ponoviti password!"/>
+
+
+                    <p:outputLabel for="name" value="Ime:"/>
+                    <p:inputText  id="name" value ="#{RegistracijaAdministrator.ime}"
+                                  required="true" requiredMessage="Uneti ime!"/>
+
+                    <p:outputLabel for="lastname" value="Prezime:"/>
+                    <p:inputText id="lastname" value ="#{RegistracijaAdministrator.prezime}"
+                                 required="true" requiredMessage="Uneti prezime!"/>
+
+                    <p:outputLabel for="phone" value ="Kontakt telefon:"/>
+                    <p:inputText id="phone" value="#{RegistracijaAdministrator.telefon}"
+                                 required="true" requiredMessage="Uneti broj telefona!"/>
+
+                    <p:outputLabel for="email" value="E-mail:"/>
+                    <p:inputText id="email" value = "#{RegistracijaAdministrator.email}"
+                                 required="true" requiredMessage="Uneti email!"/>
+
+
+                </p:panelGrid>
                 <p:commandButton value="Registruj se"  action="#{RegistracijaAdministrator.registracija()}" update="@form">
-                 
-            </p:commandButton>
+
+                </p:commandButton>
             </p:panel>            
         </h:form>
     </h:body>

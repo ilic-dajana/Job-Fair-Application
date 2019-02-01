@@ -24,25 +24,40 @@ public class RegistracijaKompanija implements Serializable {
     private String password, ponovljenPassword;
     private String email, sajt,grad, adresa, specijalnost,kompanija, ime, prezime;
     private int broj_zaposlenih,PIB;
-    private String delatnost;
+    private String delatnost, messageRegister;
     
     public String registracija() throws SQLException{
         try {
             if(UserDao.proveriUsername(username)){                
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, " Try another username", null));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username vec postoji!", null));
                 return  null;
             }
             
-            if(!UserDao.unesiKompaniju(username, password, kompanija, grad, adresa,ime, prezime, PIB, broj_zaposlenih, email, sajt, delatnost, specijalnost )){    
-                return "error";
+            messageRegister = UserDao.unesiKompaniju(username, password, kompanija, grad, adresa,ime, prezime, PIB, broj_zaposlenih, email, sajt, delatnost, specijalnost );    
+                
+            if(messageRegister == "")
+                return "login?faces-redirect=true";
+            else{
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, messageRegister, null));
+                return  null;
             }
         } catch (SQLException ex) {            
             return "error";
         }
-        return "login?faces-redirect=true";
+        
     }
 
+    public String getMessageRegister() {
+        return messageRegister;
+    }
+
+    public void setMessageRegister(String messageRegister) {
+        this.messageRegister = messageRegister;
+    }
+
+    
     public String getUsername() {
         return username;
     }

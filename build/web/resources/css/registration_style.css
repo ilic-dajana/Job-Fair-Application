@@ -3,15 +3,18 @@ body{
 }
 
 .form{
-    max-width: 470px;
+    max-width: 620px;
     margin:auto;
-    padding:5px;
 }
 
 .panel{
-    background-color:aquamarine;
+    background-color:lightgray;
     border-style:inherit;
     border-color: black;
-    border-width: 3px;
 }
 
+.image{
+ background-image:url(/projekat_id150325d/resources/images/index.png) ;
+ background-repeat:no-repeat;
+ background-size:cover; 
+}

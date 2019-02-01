@@ -25,6 +25,7 @@ public class RegistracijaAdministrator implements Serializable {
     private String ponovljenPassword;
     private String ime, prezime, email;
     private String telefon;
+    private String messageRegister;
     
     public String registracija(){
         try {
@@ -34,14 +35,28 @@ public class RegistracijaAdministrator implements Serializable {
                 return null;
             }
             
-            if(!UserDao.unesiAdministrator(username, password, ime, prezime, telefon, email)){
-                return "error";
+            messageRegister = UserDao.unesiAdministrator(username, password, ime, prezime, telefon, email);
+            
+                 
+            if(messageRegister == "")
+                return "login?faces-redirect=true";
+            else{
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, messageRegister, null));
+                return  null;
             }
-             return "login?faces-redirect=true";
         } catch (SQLException ex) {            
             return "error";
         }
        
+    }
+
+    public String getMessageRegister() {
+        return messageRegister;
+    }
+
+    public void setMessageRegister(String messageRegister) {
+        this.messageRegister = messageRegister;
     }
     
     public String getUsername() {

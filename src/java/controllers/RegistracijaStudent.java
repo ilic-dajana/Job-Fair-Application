@@ -26,22 +26,38 @@ public class RegistracijaStudent implements Serializable {
     private String telefon;
     private int godinaStudija;
     private int diplomirao;
-    private String greskaUsername ="";
+    private int[] counter;
+    private boolean flagRegister = true;
+    private String messageRegister;
     
     public String registracija(){
         try {
              if(UserDao.proveriUsername(username)){                
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, " Try another username", null));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username vec postoji!", null));
                 return  null;
             }
-            if(!UserDao.unesiStudent(username, password, ime, prezime, telefon, email, godinaStudija, diplomirao)){
-                return "error";
+             counter = UserDao.brojacSlovaIBrojeva(password);
+             
+            try {
+                messageRegister = UserDao.unesiStudent(username, password, ime, prezime, telefon, email, godinaStudija, diplomirao);
+            } catch (SQLException ex) {
+                Logger.getLogger(RegistracijaStudent.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            if(messageRegister == "")
+                return "login?faces-redirect=true";
+            else{
+                 FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, messageRegister, null));
+                return  null;
+            }
+             
+         
+            
         } catch (SQLException ex) {            
             return "error";
         }
-        return "login?faces-redirect=true";
     }
     public String getUsername() {
         return username;
@@ -49,6 +65,14 @@ public class RegistracijaStudent implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int[] getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int[] counter) {
+        this.counter = counter;
     }
 
     public String getPassword() {
@@ -66,6 +90,7 @@ public class RegistracijaStudent implements Serializable {
     public void setPonovljenPassword(String ponovljenPassword) {
         this.ponovljenPassword = ponovljenPassword;
     }
+    
 
     public String getIme() {
         return ime;
@@ -115,15 +140,22 @@ public class RegistracijaStudent implements Serializable {
         this.diplomirao = diplomirao;
     }
 
-    public String getGreskaUsername() {
-        return greskaUsername;
+    public boolean isFlagRegister() {
+        return flagRegister;
     }
 
-    public void setGreskaUsername(String greskaUsername) {
-        this.greskaUsername = greskaUsername;
+    public void setFlagRegister(boolean flagRegister) {
+        this.flagRegister = flagRegister;
     }
 
-   
+    public String getMessageRegister() {
+        return messageRegister;
+    }
+
+    public void setMessageRegister(String messageRegister) {
+        this.messageRegister = messageRegister;
+    }
+
     
     
     

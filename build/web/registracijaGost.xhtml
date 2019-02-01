@@ -9,34 +9,42 @@
         <h:outputStylesheet library="css" name="registration_style.css"/>
 
     </h:head>
-    <h:body>
-
+    <h:body styleClass="image">
+    <div style="padding-top: 1rem">
+            <h:form class="form">
+            <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                    </f:facet>                   
+                </p:toolbar> 
+            </h:form>
+        </div>
         <h:form id="gostRegistracija" class="form">
             <p:messages showDetail="false" autoUpdate="true"/>
             <p:panel header="Pretraga" class="panel">
-                <h:panelGrid columns="2" cellpadding="5" >
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid"  >
                     <p:outputLabel for="idName" value="Pretraga po imenu:"/>
                     <p:inputText id="idName" value="#{RegistracijaGost.imeKompanije}"/>
-                </h:panelGrid> 
+                </p:panelGrid> 
                 <p:commandButton value= "Pretrazi" action="#{RegistracijaGost.pretraziIme()}" update="@form"/>   
                
-                <h:panelGrid columns="2" cellpadding="5" >
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
                     <p:outputLabel for="idGrad" value="Pretraga po gradu:"/>
                     <p:inputText id="idGrad" value="#{RegistracijaGost.grad}"/>
-                </h:panelGrid> 
+                </p:panelGrid> 
                 <p:commandButton value= "Pretrazi" action="#{RegistracijaGost.pretraziGrad()}" update="@form"/>   
 
-                <h:panelGrid columns="2" cellpadding="5">
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
                     <p:outputLabel for="delatnost" value="Delatnost firme:"/>
-                <p:selectOneMenu id="delatnost" value="#{RegistracijaGost.delatnost}" >
+                <h:selectManyListbox id="delatnost"  value="#{RegistracijaGost.delatnost}" >
                  <br/>  
-                    <f:selectItem itemValue="0" itemLabel="IT" />
-                    <f:selectItem itemValue="1" itemLabel="Telekomunikacije" />
-                    <f:selectItem itemValue="2" itemLabel="Energetika" />
-                    <f:selectItem itemValue="3" itemLabel="Gradjevina i arhitektura" />
-                    <f:selectItem itemValue="4" itemLabel="Masinstvo" />                    
-                </p:selectOneMenu>
-                </h:panelGrid>
+                    <f:selectItem itemValue="IT" itemLabel="IT" />
+                    <f:selectItem itemValue="Telekomunikacije" itemLabel="Telekomunikacije" />
+                    <f:selectItem itemValue="Energetika" itemLabel="Energetika" />
+                    <f:selectItem itemValue="Gradjevina i arhitektura" itemLabel="Gradjevina i arhitektura" />
+                    <f:selectItem itemValue="Masinstvo" itemLabel="Masinstvo" />                    
+                </h:selectManyListbox>
+                </p:panelGrid>
               <p:commandButton value= "Pretrazi" action="#{RegistracijaGost.pretraziDelatnost()}" update="@form"/>   
 
                 <br/><br/>
