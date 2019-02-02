@@ -45,8 +45,10 @@ public class RegistracijaStudent implements Serializable {
                 Logger.getLogger(RegistracijaStudent.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            if(messageRegister == "")
+            if(messageRegister == ""){
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(username, username);
                 return "login?faces-redirect=true";
+            }
             else{
                  FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, messageRegister, null));

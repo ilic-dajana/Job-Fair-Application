@@ -35,4 +35,8 @@ public class ControllerPage {
     public String login(){
          return "login?faces-redirect=true";
     }
+    
+    public String CV(){
+        return "studentCVUpload?faces-redirect=true";
+    }
 }

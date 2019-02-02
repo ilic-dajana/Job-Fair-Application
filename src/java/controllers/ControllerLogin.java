@@ -21,7 +21,7 @@ public class ControllerLogin implements Serializable {
         if(UserDao.proveriKorisnika(username, password)){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
 
-            return "proba?faces-redirect=true";
+            return "studentPage?faces-redirect=true";
         }
       return "error?faces-redirect=true";
     }
