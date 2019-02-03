@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/src/java/controllers/ControllerStudent.java</file>
-            <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/web/studentCVUpload.xhtml</file>
-            <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/web/registracijaGost.xhtml</file>
+            <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/src/java/controllers/ControllerKompanija.java</file>
+            <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/web/kompanijaPage.xhtml</file>
+            <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/src/java/beans/Konkurs.java</file>
             <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/web/index.xhtml</file>
+            <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/src/java/util/dao/KompanijaDao.java</file>
+            <file>file:/home/dajana/NetBeansProjects/projekat_id150325d/src/java/controllers/RegistracijaAdministrator.java</file>
         </group>
     </open-files>
 </project-private>

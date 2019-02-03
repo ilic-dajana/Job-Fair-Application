@@ -1,41 +1,27 @@
-body{
-    background-color:appworkspace;
-}
-
-.form{
-    max-width: 620px;
-    margin:auto;
-}
-
-.home {
-    background-image:   url(/projekat_id150325d/resources/images/home1.png) ;
-}
-.return {
-    background-image:  url(/projekat_id150325d/resources/images/return.png) ;
-}
-.panel{
-    background-color:lightgray;
-    border-style:inherit;
-    border-color: black;
-}
-
-.image{
- background-image:url(/projekat_id150325d/resources/images/index.png) ;
- background-repeat:no-repeat no-repeat;
- background-size:cover; 
- background-position:center;
- width: 100%;
- height:100%;
- margin:auto;
- padding:0;
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  -ms-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  transition: all .5s ease;
+h1 {
+  color:black;
 }
 
 h3{
     color:royalblue;
     font-family:sans-serif;
 }
+
+
+.image{
+ background-image:url(/projekat_id150325d/resources/images/index.png); fixed;
+    height: 602px;
+    background-size: cover;
+}
+
+.form{
+    max-width: 470px;
+    margin:auto;
+}
+
+.panel{
+    background-color:lightgray;
+    border-style:inherit;
+    border-color: black;
+}
+

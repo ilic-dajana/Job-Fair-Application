@@ -5,29 +5,33 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Korisnik Student</title>
         <h:outputStylesheet library="css" name="registration_style.css"/>
-
-    </h:head>
-    <h:body styleClass="image">
-        <div style="padding-top: 1rem">
-            <h:form class="form">
+        <div>
+            <h:form class="form1">
             <p:toolbar id="tbK">
                 <f:facet name="left">
                     <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
                 </f:facet>
                 <f:facet name="left">
-                    <p:commandButton  value="Sign Out" action="#{ControllerPage.login()}"/>
+                    <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}"/>
                 </f:facet>
-                <f:facet name="right">
+                <f:facet name="left">
                     <p:commandButton value="CV" action="#{ControllerPage.CV()}"/>
                 </f:facet>
+                 <f:facet name="right">
+                    <p:outputLabel value="Username:"/>
+                </f:facet>
                 <f:facet name="right" >
-                    <p:outputLabel    value="#{username}"/>
+                    <p:outputLabel value="#{username}" style="color:blue;"/>
                 </f:facet>
                 </p:toolbar> 
             </h:form>   
         </div>
+    </h:head>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"/>
+            
         <h:form id="studentPage" class="form">
             <p:messages showDetail="false" autoUpdate="true"/>
             <p:panel>

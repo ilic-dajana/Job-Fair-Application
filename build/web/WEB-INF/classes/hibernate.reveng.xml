@@ -41,8 +41,14 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="job_fair"/>
-  <table-filter match-name="kompanija"/>
+  <table-filter match-name="zaposlenje"/>
+  <table-filter match-name="konkurs"/>
+  <table-filter match-name="telefon"/>
   <table-filter match-name="administrator"/>
+  <table-filter match-name="kompanija"/>
   <table-filter match-name="student"/>
+  <table-filter match-name="biografija"/>
   <table-filter match-name="User"/>
+  <table-filter match-name="obrazovanje"/>
+  <table-filter match-name="email"/>
 </hibernate-reverse-engineering>

@@ -4,34 +4,16 @@ import beans.Administrator;
 import beans.Kompanija;
 import beans.Student;
 import beans.User;
-import controllers.RegistracijaStudent;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.sql.PreparedStatement;
-import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
-
 import util.HibernateUtil;
 
 /**
@@ -199,6 +181,7 @@ public class UserDao {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         String pass = hasheFunc(password);
+       
         try{
            tx = session.beginTransaction();
            String sqlquery="FROM User WHERE username =:username AND password =:password";
@@ -206,6 +189,8 @@ public class UserDao {
            q.setString("username", username);
            q.setString("password", pass);
            boolean exists = (q.uniqueResult() != null);
+           
+          
            tx.commit();
            return exists;
         }catch(Exception e){

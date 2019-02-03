@@ -2,12 +2,57 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Proba</title>
+        <title>CV Upload</title>
+        <h:outputStylesheet library="css" name="registration_style.css"/>
+        <div >
+            <h:form class="form1">
+                <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" />
+                    </f:facet>
+                    <f:facet name="right">
+                        <p:outputLabel value="Username:"/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>
+        </div>
     </h:head>
-    <h:body>
-        <h1>Dajana</h1>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"/>
+
+        <h:form id="studentPage" class="form1">
+            <p:layout style="min-width:400px;min-height:200px;">
+                <p:layoutUnit position="west" style="width:400px" >
+                    <p:panel class="panel" >
+                        <p:panelGrid columns="2"> 
+                            <p:outputLabel value="dajana1"/>
+                            <p:outputLabel value="dajana2"/>
+                            <p:outputLabel value="dajana1"/>
+                            <p:outputLabel value="dajana2"/>
+                        </p:panelGrid>
+                    </p:panel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" style="width:400px">
+                    <p:panel class="panel" >
+                        <p:panelGrid columns="2"> 
+                            <p:outputLabel value="dajana1"/>
+                            <p:outputLabel value="dajana2"/>
+                        </p:panelGrid>
+                    </p:panel>
+                </p:layoutUnit>
+            </p:layout>
+
+        </h:form>
     </h:body>
 </html>
 

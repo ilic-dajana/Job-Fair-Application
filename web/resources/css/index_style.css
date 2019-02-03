@@ -2,6 +2,11 @@ h1 {
   color:black;
 }
 
+h3{
+    color:royalblue;
+    font-family:sans-serif;
+}
+
 
 .image{
  background-image:url(/projekat_id150325d/resources/images/index.png) ;

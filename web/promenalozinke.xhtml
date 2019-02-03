@@ -7,17 +7,19 @@
     <h:head>
         <title> Promena lozinke </title>
          <h:outputStylesheet library="css" name="registration_style.css"/>
-    </h:head>
-    <h:body styleClass="image">
-        <div style="padding-top: 1rem">
-            <h:form class="form">
-            <p:toolbar id="tbL">
+         <div >
+            <h:form class="form1">
+                <p:toolbar id="tbL">
                     <f:facet name="left">
-                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
-                    </f:facet>                   
+                    <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                    </f:facet>   
                 </p:toolbar> 
             </h:form>
         </div>
+    </h:head>
+    <h:body styleClass="image">
+       <div style="padding-top: 2rem"></div>
+
         <h:form id="promenaLozinke" class="form">
 
             <p:messages showDetail="false" autoUpdate="true"/>  

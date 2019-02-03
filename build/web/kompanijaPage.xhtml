@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Korisnik Kompanija</title>
+        <h:outputStylesheet library="css" name="registration_style.css"/>
+        <div>
+            <h:form class="form1">
+                <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}"/>
+                    </f:facet>
+                    <f:facet name="right">
+                        <p:outputLabel value="Username: "/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>   
+        </div>
+    </h:head>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"/>
+
+        <h:form id="studentPage" class="form1">
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate />
+            </p:messages>
+           <p:panel class="panel">
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%; border: black;" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">
+                    <p:outputLabel for="tip" value="Tip konkursa:"/>
+                   <h:selectOneMenu id="tip" value="#{kompanija.tip}">
+                        <f:selectItem itemValue="Praksa" itemLabel="Praksa"/>
+                        <f:selectItem itemValue="Posao" itemLabel="Posao"/>             
+                    </h:selectOneMenu>
+                    <p:outputLabel for="naziv" value="Naziv pozicije:"/>
+                    <p:inputText id="naziv" value="#{kompanija.pozicija}"/>
+                     <p:outputLabel for="opis" value="Opis konkursa:"/>
+                    <p:inputTextarea id="opis" value="#{kompanija.opis}"/>
+                    <p:outputLabel for="rok" value="Rok za prijavu:"/>
+                    <h:inputText id="rok" value="#{kompanija.datumIsteka}">
+                         <f:convertDateTime pattern="MM-dd-yyyy"/>  
+                    </h:inputText>
+                   
+                    <p:commandButton value="Otvori konkurs" action="#{kompanija.otvoriKonkurs()}"/>
+                </p:panelGrid>
+                  
+                
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
+        <h:form class="form1">
+            <p:toolbar id="tb"  >               
+                <f:facet name="right">
+                    <p:commandButton value="Prijavi se na sajam"/>
+                </f:facet>
+            </p:toolbar>    
+        </h:form>
+    </h:body>
+</html>
+

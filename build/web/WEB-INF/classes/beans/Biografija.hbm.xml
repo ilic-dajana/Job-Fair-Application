@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 3, 2019 8:02:34 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Biografija" table="biografija" catalog="job_fair" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="ime" type="string">
+            <column name="ime" length="45" not-null="true" />
+        </property>
+        <property name="prezime" type="string">
+            <column name="prezime" length="45" not-null="true" />
+        </property>
+        <property name="adresa" type="string">
+            <column name="adresa" length="45" not-null="true" />
+        </property>
+        <property name="postanskiBr" type="int">
+            <column name="postanski_br" not-null="true" />
+        </property>
+        <property name="drzava" type="string">
+            <column name="drzava" length="45" not-null="true" />
+        </property>
+        <property name="grad" type="string">
+            <column name="grad" length="45" not-null="true" />
+        </property>
+        <property name="tipAplikacije" type="string">
+            <column name="tip_aplikacije" length="45" not-null="true" />
+        </property>
+        <property name="maternjiJezik" type="string">
+            <column name="maternji_jezik" length="45" not-null="true" />
+        </property>
+        <property name="straniJezik" type="string">
+            <column name="strani_jezik" length="45" not-null="true" />
+        </property>
+        <property name="communicationSkills" type="string">
+            <column name="communication_skills" length="200" not-null="true" />
+        </property>
+        <property name="organisationalSkills" type="string">
+            <column name="organisational_skills" length="200" not-null="true" />
+        </property>
+        <property name="jobrelatedSkills" type="string">
+            <column name="jobrelated_skills" length="200" not-null="true" />
+        </property>
+        <one-to-one name="obrazovanje" class="beans.Obrazovanje"></one-to-one>
+        <one-to-one name="email" class="beans.Email"></one-to-one>
+        <one-to-one name="zaposlenje" class="beans.Zaposlenje"></one-to-one>
+        <one-to-one name="telefon" class="beans.Telefon"></one-to-one>
+    </class>
+</hibernate-mapping>

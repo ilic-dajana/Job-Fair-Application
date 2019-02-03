@@ -51,7 +51,13 @@ Contributor(s):
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
     <mapping resource="beans/Administrator.hbm.xml"/>
     <mapping resource="beans/Kompanija.hbm.xml"/>
+    <mapping resource="beans/Email.hbm.xml"/>
     <mapping resource="beans/Student.hbm.xml"/>
+    <mapping resource="beans/Konkurs.hbm.xml"/>
+    <mapping resource="beans/Zaposlenje.hbm.xml"/>
+    <mapping resource="beans/Biografija.hbm.xml"/>
     <mapping resource="beans/User.hbm.xml"/>
+    <mapping resource="beans/Obrazovanje.hbm.xml"/>
+    <mapping resource="beans/Telefon.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

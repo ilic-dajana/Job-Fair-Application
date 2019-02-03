@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import util.Return;
 import util.dao.UserDao;
+
 
 /**
  *
@@ -18,14 +21,31 @@ public class ControllerLogin implements Serializable {
     private String username, password;
     
     public String login(){
+        
         if(UserDao.proveriKorisnika(username, password)){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
-
-            return "studentPage?faces-redirect=true";
+          
+            String res = ControllerPage.checkAdmin(username);
+            if(res!= null)
+                return res;
+            res=ControllerPage.checkKompanija(username);
+            if(res!= null)
+               return res;
+            res=ControllerPage.checkStudent(username);
+            if(res!= null)
+               return res;
+            
         }
-      return "error?faces-redirect=true";
+       
+        return null;
     }
 
+     public String logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+        session.invalidate();
+        return "login";
+    }
     public String getUsername() {
         return username;
     }

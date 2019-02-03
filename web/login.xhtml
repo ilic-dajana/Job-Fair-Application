@@ -7,22 +7,23 @@
     <h:head>
         <title>Login page</title>
                 <h:outputStylesheet library="css" name="registration_style.css"/>
-
+                <div >
+                <h:form class="form1">
+                    <p:toolbar id="tbL">
+                            <f:facet name="left">
+                            <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                        </f:facet>                   
+                    </p:toolbar> 
+                </h:form>
+                </div>
     </h:head>
     <h:body styleClass="image">   
-        <div style="padding-top: 1rem">
-            <h:form class="form">
-            <p:toolbar id="tbL">
-                    <f:facet name="left">
-                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
-                    </f:facet>                   
-                </p:toolbar> 
-            </h:form>
-        </div>
+        <div style="padding-top: 2rem"/>
         <h:form id="Login" class="form">
                 <p:messages showDetail="false" autoUpdate="true"/>
              <p:panel header="Login" class="panel">
-                <h:panelGrid columns="2" cellpadding="5">                <p:outputLabel for="idUsername" value="Username:"/>
+                <h:panelGrid columns="2" cellpadding="5">                
+                <p:outputLabel for="idUsername" value="Username:"/>
                 <p:inputText id="idUsername" value="#{ControllerLogin.username}"/>
           
                 
@@ -30,21 +31,11 @@
                 <p:password value="#{ControllerLogin.password}"/>   
                 </h:panelGrid>
                 
-                 
+           <p:commandButton value="Uloguj se" action="#{ControllerLogin.login()}" update="@form"/>   
+
              </p:panel>
         </h:form>
-         <div style="padding-bottom: 1rem">
-            <h:form class="form">
-            <p:toolbar id="tbK">
-                <f:facet name="left">
-                <p:commandButton value="Uloguj se" action="#{ControllerLogin.login()}" update="@form"/>   
-                  </f:facet>
-                  <f:facet name="right">
-                <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
-                 </f:facet>
-            </p:toolbar>
-            </h:form>
-         </div>
+         
               
     </h:body>
 </html>
