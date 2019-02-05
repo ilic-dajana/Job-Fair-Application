@@ -172,7 +172,6 @@ public class UserDao {
             }
             return hash.toString();
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }    
     }
