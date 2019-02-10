@@ -1,12 +1,102 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Admin: {username}</title>
+
+        <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ControllerPage.authAdmin()}"/>
+        </f:metadata>
+
+        <h:outputStylesheet library="css" name="registration_style.css"/>
+        <div>
+            <h:form class="form1">
+                <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.home()}" />
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
+                    </f:facet>                   
+                    <f:facet name="right">
+                        <p:outputLabel value="Username: "/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>   
+        </div>
     </h:head>
-    <h:body>
-        Admin
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"/>
+
+        <h:form id="studentPage" class="form1">
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate />
+            </p:messages>
+
+            <p:layout  style="height: 277px" >                    
+                <p:layoutUnit position="west"  size="650" >
+                    <p:panel class="panel" header="Postavljanje intervala za CV"  style="height:250px">
+                        <h3>Vreme za studenta da azurira CV:</h3>
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid"  columnClasses="forty-percent top-alignment, sixty-percent top-alignment">
+                            <p:outputLabel for="datumOd" value="Datum od:"/>
+                            <p:calendar id="datumOd" value="#{ControllerAdmin.datumOd}" showOn="button" />
+                            <p:outputLabel for="datumDo" value="Datum do:"/>
+                            <p:calendar id="datumDo" value="#{ControllerAdmin.datumDo}" showOn="button"/>
+                            <p:commandButton value="Dodaj" action="#{ControllerAdmin.azurirajCVdatum()}"/>
+                        </p:panelGrid>   
+                    </p:panel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center"  >
+                    <p:panel class="panel" header="Postavljanje intervala za Sajam" style="height:250px" >
+                        <h3>Vreme za kompaniju da se prijavi na sajam:</h3>
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">
+                            <p:outputLabel for="datumOd1" value="Datum od:"/>
+                            <p:calendar id="datumOd1" value="#{ControllerAdmin.datumOdSajam}" showOn="button" />
+                            <p:outputLabel for="datumDo1" value="Datum do:"/>
+                            <p:calendar id="datumDo1" value="#{ControllerAdmin.datumDoSajam}" showOn="button"/>
+                            <p:commandButton value="Dodaj" action="#{ControllerAdmin.azurirajSajamDatum()}"/>
+                        </p:panelGrid>   
+                    </p:panel>
+                </p:layoutUnit>
+            </p:layout>  
+            <p:carousel class="panel" value="#{ControllerAdmin.kompanijeZaSajam}" headerText="Kompanije koje zele da ucestvuju na sajmu:" var="kk" itemStyle="text-align:center" responsive="true" rendered="#{!(ControllerAdmin.kompanijeZaSajam.size() == 0)}" >
+                <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+                    <f:facet name="header">#{kk.k.naziv}</f:facet>
+                    <h:outputLabel value="Tip prijave:"/>
+                    <h:outputLabel value="#{kk.tip}"/>
+                    <h:outputLabel value="Delatnost:"/>
+                    <h:outputLabel value="#{kk.k.delatnost}"/>
+                    <h:outputLabel value="Direktor firme:"/>
+                    <h:outputLabel value="#{kk.k.direktorIme}  #{kk.k.direktorPrezime}" />
+                    <h:commandButton value="Prihvati" action="#{ControllerAdmin.prihvati(kk.k.id)}"/>
+                    <h:commandButton value="Odbij" action="#{ControllerAdmin.odbij(kk.k.id)}"/>
+                </p:panelGrid>
+            </p:carousel>
+            <p:carousel class="panel" value="#{ControllerAdmin.kompanijePrihvacene}" headerText="Kompanije kojima treba da se raspodeli mesto:" var="komp" itemStyle="text-align:center" responsive="true" rendered="#{!(ControllerAdmin.kompanijePrihvacene.size() == 0)}">
+                <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+                    <f:facet name="header">#{komp.k.naziv}</f:facet>
+                    <h:outputLabel value="Tip prijave:"/>
+                    <h:outputLabel value="#{komp.tip}"/>
+                    <h:outputLabel value="Delatnost:"/>
+                    <h:outputLabel value="#{komp.k.delatnost}"/>
+                    <h:outputLabel value="Direktor firme:"/>
+                    <h:outputLabel value="#{komp.k.direktorIme}  #{komp.k.direktorPrezime}" />
+                    <h:outputLabel value="Izaberi stand:"/>
+                    <p:selectOneMenu value="#{ControllerAdmin.izabranStand}">
+                        <f:selectItems value="#{ControllerAdmin.standovi}"/>
+                    </p:selectOneMenu>
+                    <h:commandButton value="Zavrsi izbor" action="#{ControllerAdmin.izaberiStand(komp.k, komp)}"/>
+                </p:panelGrid>
+            </p:carousel>
+        </h:form>
     </h:body>
 </html>
 

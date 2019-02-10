@@ -7,12 +7,13 @@
     <h:head>
         <title>Login page</title>
                 <h:outputStylesheet library="css" name="registration_style.css"/>
+                
                 <div >
                 <h:form class="form1">
                     <p:toolbar id="tbL">
-                            <f:facet name="left">
-                            <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
-                        </f:facet>                   
+                         <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.home()}" />
+                    </f:facet>                               
                     </p:toolbar> 
                 </h:form>
                 </div>
@@ -20,7 +21,9 @@
     <h:body styleClass="image">   
         <div style="padding-top: 2rem"/>
         <h:form id="Login" class="form">
-                <p:messages showDetail="false" autoUpdate="true"/>
+                 <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate />
+                 </p:messages>
              <p:panel header="Login" class="panel">
                 <h:panelGrid columns="2" cellpadding="5">                
                 <p:outputLabel for="idUsername" value="Username:"/>

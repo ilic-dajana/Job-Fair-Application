@@ -1,12 +1,15 @@
 package beans;
-// Generated Feb 3, 2019 8:02:34 PM by Hibernate Tools 4.3.1
+// Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1
 
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -36,11 +39,29 @@ public class Kompanija  implements java.io.Serializable {
      private String delatnost;
      private String specijalnost;
      private String grad;
+     private Set<Standovi> standovis = new HashSet<Standovi>(0);
+     private Set<Konkurs> konkurses = new HashSet<Konkurs>(0);
+     private Prijavanasajam prijavanasajam;
 
     public Kompanija() {
     }
 
+	
     public Kompanija(User user, String naziv, String adresa, String direktorIme, String direktorPrezime, int pib, int brojZaposlenih, String email, String sajt, String delatnost, String specijalnost, String grad) {
+        this.user = user;
+        this.naziv = naziv;
+        this.adresa = adresa;
+        this.direktorIme = direktorIme;
+        this.direktorPrezime = direktorPrezime;
+        this.pib = pib;
+        this.brojZaposlenih = brojZaposlenih;
+        this.email = email;
+        this.sajt = sajt;
+        this.delatnost = delatnost;
+        this.specijalnost = specijalnost;
+        this.grad = grad;
+    }
+    public Kompanija(User user, String naziv, String adresa, String direktorIme, String direktorPrezime, int pib, int brojZaposlenih, String email, String sajt, String delatnost, String specijalnost, String grad, Set<Standovi> standovis, Set<Konkurs> konkurses, Prijavanasajam prijavanasajam) {
        this.user = user;
        this.naziv = naziv;
        this.adresa = adresa;
@@ -53,6 +74,9 @@ public class Kompanija  implements java.io.Serializable {
        this.delatnost = delatnost;
        this.specijalnost = specijalnost;
        this.grad = grad;
+       this.standovis = standovis;
+       this.konkurses = konkurses;
+       this.prijavanasajam = prijavanasajam;
     }
    
      @GenericGenerator(name="generator", strategy="foreign", parameters=@Parameter(name="property", value="user"))@Id @GeneratedValue(generator="generator")
@@ -184,6 +208,33 @@ public class Kompanija  implements java.io.Serializable {
     
     public void setGrad(String grad) {
         this.grad = grad;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="kompanija")
+    public Set<Standovi> getStandovis() {
+        return this.standovis;
+    }
+    
+    public void setStandovis(Set<Standovi> standovis) {
+        this.standovis = standovis;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="kompanija")
+    public Set<Konkurs> getKonkurses() {
+        return this.konkurses;
+    }
+    
+    public void setKonkurses(Set<Konkurs> konkurses) {
+        this.konkurses = konkurses;
+    }
+
+@OneToOne(fetch=FetchType.LAZY, mappedBy="kompanija")
+    public Prijavanasajam getPrijavanasajam() {
+        return this.prijavanasajam;
+    }
+    
+    public void setPrijavanasajam(Prijavanasajam prijavanasajam) {
+        this.prijavanasajam = prijavanasajam;
     }
 
 

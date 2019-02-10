@@ -5,13 +5,16 @@
  */
 package controllers;
 
-import beans.Obrazovanje;
-import beans.Zaposlenje;
+import beans.Kompanija;
+import helpers.KompanijaKonkurs;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import util.dao.DatumDao;
+import util.dao.KompanijaDao;
 
 /**
  *
@@ -20,139 +23,72 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name = "student")
 @SessionScoped
 public class ControllerStudent {
-    private List<String> telefoni = new ArrayList<>();
-    private List<String> webSites = new ArrayList<>();
-    private String tipApp;
-    private List<String> educations = new ArrayList<>();
-    private List<String> jobs = new ArrayList<>();
-    private String maternjiJezik;
-    private String straniJezik;
-    private String communication;
-    private String organisation;
-    private String skills;
     
+    private String kompanija;
+    private String pozicija;
+    private String tipPretrageKonkursa;
+    private List<Kompanija> kompanijeZaPretragu = new ArrayList<>();
+    private List<KompanijaKonkurs> konkursiPretrage = new ArrayList<>();
     
-    
-    public String addJob(){
-        jobs.add("");
-        return null;
+    public String traziKonkurse(){
+        konkursiPretrage = KompanijaDao.pretraziKonkurse(pozicija, tipPretrageKonkursa);
+        return "studentPage?faces-redirect=true";
     }
-    
-    public String removeJob(int n){
-        jobs.remove(n);
-        return null;
+    public String traziKompanije(){
+        kompanijeZaPretragu = KompanijaDao.pretraziKompanijePoImenu(kompanija);
+        return "studentPage?faces-redirect=true";
     }
-    public String addEducation(){
-        educations.add("");
-        return null;
-    }
-    
-    public String removeEducation(int n){
-        educations.remove(n);
-        return null;
-    }
-    
-    public String addTelephone(){
-        telefoni.add("");
-        return null;
-    }
-
      
-    public String addWeb(){
-        webSites.add("");
-        return null;
+
+
+    public List<Kompanija> getKompanijeZaPretragu() {
+        return kompanijeZaPretragu;
     }
+
+    public void setKompanijeZaPretragu(List<Kompanija> kompanijeZaPretragu) {
+        this.kompanijeZaPretragu = kompanijeZaPretragu;
+    }
+        
     
-    public String removeTelephone(int n){
-        telefoni.remove(n);
-        return null;
-    }
-    
-    public String removeWeb(int n){
-        webSites.remove(n);
-        return null;
-    }
-
-    public List<String> getJobs() {
-        return jobs;
+    public boolean mozeCV(){
+        Date danas = Calendar.getInstance().getTime();
+        
+        if(DatumDao.proveriDatumeCV(danas)){
+           return true; 
+        }
+        return false;
     }
 
-    public void setJobs(List<String> jobs) {
-        this.jobs = jobs;
+    public String getKompanija() {
+        return kompanija;
     }
 
-    public List<String> getEducations() {
-        return educations;
+    public void setKompanija(String kompanija) {
+        this.kompanija = kompanija;
     }
 
-    public void setEducations(List<String> educations) {
-        this.educations = educations;
+    public String getPozicija() {
+        return pozicija;
     }
 
-    public List<String> getWebSites() {
-        return webSites;
+    public void setPozicija(String pozicija) {
+        this.pozicija = pozicija;
     }
 
-    public void setWebSites(List<String> webSites) {
-        this.webSites = webSites;
-    }
-    
-     public List<String> getTelefoni() {
-        return telefoni;
+    public String getTipPretrageKonkursa() {
+        return tipPretrageKonkursa;
     }
 
-    public void setTelefoni(List<String> telefoni) {
-        this.telefoni = telefoni;
+    public void setTipPretrageKonkursa(String tipPretrageKonkursa) {
+        this.tipPretrageKonkursa = tipPretrageKonkursa;
     }
 
-    public String getTipApp() {
-        return tipApp;
+    public List<KompanijaKonkurs> getKonkursiPretrage() {
+        return konkursiPretrage;
     }
 
-    public void setTipApp(String tipApp) {
-        this.tipApp = tipApp;
+    public void setKonkursiPretrage(List<KompanijaKonkurs> konkursiPretrage) {
+        this.konkursiPretrage = konkursiPretrage;
     }
-
-    public String getMaternjiJezik() {
-        return maternjiJezik;
-    }
-
-    public void setMaternjiJezik(String maternjiJezik) {
-        this.maternjiJezik = maternjiJezik;
-    }
-
-    public String getStraniJezik() {
-        return straniJezik;
-    }
-
-    public void setStraniJezik(String straniJezik) {
-        this.straniJezik = straniJezik;
-    }
-
-    public String getCommunication() {
-        return communication;
-    }
-
-    public void setCommunication(String communication) {
-        this.communication = communication;
-    }
-
-    public String getOrganisation() {
-        return organisation;
-    }
-
-    public void setOrganisation(String organisation) {
-        this.organisation = organisation;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
-    
-    
    
 }

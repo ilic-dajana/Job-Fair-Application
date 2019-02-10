@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Standovi" table="standovi" catalog="job_fair" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="kompanija" class="beans.Kompanija" fetch="select">
+            <column name="kompanijaId" not-null="true" />
+        </many-to-one>
+        <property name="ime" type="string">
+            <column name="ime" length="45" not-null="true" />
+        </property>
+        <property name="kompanijaIme" type="string">
+            <column name="kompanijaIme" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

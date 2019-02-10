@@ -11,8 +11,11 @@
             <h:form class="form1">
                 <p:toolbar id="tbL">
                     <f:facet name="left">
-                    <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
-                    </f:facet>   
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.home()}"/>
+                    </f:facet>  
+                    <f:facet name="right">
+                    <p:commandButton  value="Login" action="#{ControllerPage.login()}" icon="fa fa-fw fa-arrow-circle-o-right"/>
+                    </f:facet> 
                 </p:toolbar> 
             </h:form>
         </div>

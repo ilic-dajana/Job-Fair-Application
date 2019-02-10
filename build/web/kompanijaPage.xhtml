@@ -5,17 +5,21 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Korisnik Kompanija</title>
+        <title>Kompanija: {username}</title>
+        <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ControllerPage.authKompanija()}"/>
+        </f:metadata>
         <h:outputStylesheet library="css" name="registration_style.css"/>
         <div>
             <h:form class="form1">
                 <p:toolbar id="tbK">
-                    <f:facet name="left">
-                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                     <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.home()}" />
                     </f:facet>
                     <f:facet name="left">
-                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}"/>
-                    </f:facet>
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
+                    </f:facet>                  
                     <f:facet name="right">
                         <p:outputLabel value="Username: "/>
                     </f:facet>
@@ -33,37 +37,58 @@
             <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate />
             </p:messages>
-           <p:panel class="panel">
-                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">
-                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%; border: black;" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">
-                    <p:outputLabel for="tip" value="Tip konkursa:"/>
-                   <h:selectOneMenu id="tip" value="#{kompanija.tip}">
-                        <f:selectItem itemValue="Praksa" itemLabel="Praksa"/>
-                        <f:selectItem itemValue="Posao" itemLabel="Posao"/>             
-                    </h:selectOneMenu>
-                    <p:outputLabel for="naziv" value="Naziv pozicije:"/>
-                    <p:inputText id="naziv" value="#{kompanija.pozicija}"/>
-                     <p:outputLabel for="opis" value="Opis konkursa:"/>
-                    <p:inputTextarea id="opis" value="#{kompanija.opis}"/>
-                    <p:outputLabel for="rok" value="Rok za prijavu:"/>
-                    <h:inputText id="rok" value="#{kompanija.datumIsteka}">
-                         <f:convertDateTime pattern="MM-dd-yyyy"/>  
-                    </h:inputText>
-                   
-                    <p:commandButton value="Otvori konkurs" action="#{kompanija.otvoriKonkurs()}"/>
-                </p:panelGrid>
-                  
-                
-                </p:panelGrid>
+            <p:layout  style="height: 327px" > 
+                <p:layoutUnit position="west"  size="650" >
+                    <p:panel class="panel" style="height:300px" header="Otvaranje konkursa" >
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%; border: black;" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">
+                            <p:outputLabel for="tip" value="Tip konkursa:"/>
+                            <h:selectOneMenu id="tip" value="#{kompanija.tip}">
+                                <f:selectItem itemValue="Praksa" itemLabel="Praksa"/>
+                                <f:selectItem itemValue="Posao" itemLabel="Posao"/>             
+                            </h:selectOneMenu>
+                            <p:outputLabel for="naziv" value="Naziv pozicije:"/>
+                            <p:inputText id="naziv" value="#{kompanija.pozicija}"/>
+                            <p:outputLabel for="opis" value="Opis konkursa:"/>
+                            <p:inputTextarea id="opis" value="#{kompanija.opis}"/>
+                            <p:outputLabel for="rok" value="Rok za prijavu:"/>
+                            <p:calendar id="rok" value="#{kompanija.datumIsteka}" showOn="button" />
+                            <p:commandButton value="Otvori konkurs" action="#{kompanija.otvoriKonkurs()}"/>
+                        </p:panelGrid>
+                    </p:panel>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">
+                    <p:panel class="panel" style="height:300px" header="Prijava na sajam" >
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%; border: black;" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">
+                            <p:outputLabel value="Izaberite paket:"/>
+                            <p:selectOneMenu value="#{kompanija.paket}" >
+                                <f:selectItem  itemValue="Generalni" itemLabel="Generalni pokrovitelj"/>
+                                <f:selectItem itemValue="Zlatni" itemLabel="Zlatni"/>
+                                <f:selectItem itemValue="Bronzani" itemLabel="Bronzani"/>
+                                <f:selectItem itemValue="Standardni" itemLabel="Standardni"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Prijavi se" action="#{kompanija.prijaviSeNaSajam()}" disabled="#{!kompanija.sajamUToku()}"/>
+                        </p:panelGrid>
+                        <br/>
+                        <br/>
+                        <p:outputLabel value="Ni jedan sajam nije u toku!" rendered="#{!kompanija.sajamUToku()}" style="color:blue; font-size:30px; "/>
+                    </p:panel>
+                </p:layoutUnit>                
+            </p:layout> 
+            <p:panel class="panel" header="Moji konkursi">
+                <p:carousel value="#{kompanija.konkursi}" headerText="Moji konkursi" var="k" itemStyle="text-align:center" responsive="true">
+                    <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+                        <f:facet name="header">#{k.tipKonkurs}</f:facet>
+                        <h:outputLabel value="Naziv pozicije:"/>
+                        <h:outputLabel value="#{k.pozicija}"/>
+                        <h:outputLabel value="Opis:"/>
+                        <h:outputLabel value="#{k.opis}"/>
+                        <h:outputLabel value="Rok za prijavu:"/>
+                        <h:outputLabel value="#{k.rok}"/>
+                    </p:panelGrid>
+                </p:carousel>
             </p:panel>
         </h:form>
-        <h:form class="form1">
-            <p:toolbar id="tb"  >               
-                <f:facet name="right">
-                    <p:commandButton value="Prijavi se na sajam"/>
-                </f:facet>
-            </p:toolbar>    
-        </h:form>
+
     </h:body>
 </html>
 

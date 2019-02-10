@@ -10,11 +10,11 @@
         <div>
             <h:form class="form1">
                 <p:toolbar id="tbL">
-                    <f:facet name="left">
-                    <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
-                    </f:facet>    
+                     <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.home()}" />
+                    </f:facet>                   
                      <f:facet name="right">
-                    <p:commandButton  value="Login" action="#{ControllerPage.login()}"/>
+                    <p:commandButton  value="Login" action="#{ControllerPage.login()}" icon="fa fa-fw fa-arrow-circle-o-right"/>
                     </f:facet>  
                 </p:toolbar> 
             </h:form>
@@ -26,7 +26,9 @@
         <h:form id="adminRegistracija" class="form">     
            <div style="padding-top: 1rem"></div>
 
-            <p:messages showDetail="false" autoUpdate="true"/>
+             <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate />
+            </p:messages>
 
             <p:panel id="panel" header="Registracija Administratora" class="panel"> 
                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">

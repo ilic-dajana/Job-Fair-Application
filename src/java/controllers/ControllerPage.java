@@ -6,6 +6,7 @@
 package controllers;
 
 import beans.User;
+import java.io.IOException;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 import util.Return;
+import util.SessionUtils;
 
 /**
  *
@@ -24,6 +26,7 @@ import util.Return;
 @ManagedBean(name = "ControllerPage")
 @SessionScoped
 public class ControllerPage {
+    private String message;
 
     public static String admin(){
         return "registracijaAdministrator?faces-redirect=true";
@@ -55,7 +58,7 @@ public class ControllerPage {
            Query q = session.createQuery(sqlquery);
            q.setString("username", username);
            List<User> users= q.list();
-         
+           
            sqlquery="FROM Administrator WHERE id=:id";
            Query q1 = session.createQuery(sqlquery);
            q1.setInteger("id", users.get(0).getId());
@@ -136,4 +139,39 @@ public class ControllerPage {
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kompanija ne postoji u bazi", null));
         return  null;
     }
+     
+      private static void pageError() {
+        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(contextPath + "/faces/login.xhtml");
+       } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+     
+     public static void authAdmin(){
+         User user = SessionUtils.getUser();
+         if(user == null || user.getAdministrator() == null)
+             pageError();
+     }
+     public static void authStudent(){
+         User user = SessionUtils.getUser();
+         if(user == null || user.getStudent()== null)
+             pageError();
+     }
+     public static void authKompanija(){
+         User user = SessionUtils.getUser();
+         if(user == null || user.getKompanija() == null)
+             pageError();
+     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+     
+     
 }

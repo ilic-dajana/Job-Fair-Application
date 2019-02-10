@@ -2,6 +2,7 @@ package util.dao;
 
 import beans.Administrator;
 import beans.Kompanija;
+import beans.Prijavanasajam;
 import beans.Student;
 import beans.User;
 import java.nio.charset.StandardCharsets;
@@ -9,8 +10,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.logging.Level;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -46,6 +49,29 @@ public class UserDao {
        }     
        
     } 
+    
+    public static User dohUser(String username){
+         Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String query = "FROM User user WHERE user.username=:username";
+            Query q = session.createQuery(query);
+            q.setString("username", username);
+            User user = (User) q.uniqueResult();
+            tx.commit();
+            return user;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+}
+    }
+    
    
     public static String unesiStudent(String username, String password, String ime, String prezime, 
                                      String telefon, String email, int godStudija, int diplomirao) throws SQLException{
@@ -111,11 +137,12 @@ public class UserDao {
             User user = new User(username, pass);
             Kompanija kompan = new Kompanija(user, kompanija, adresa,ime, prezime, 
                                     PIB, broj_zaposlenih, email, sajt, delatnost, specijalnost,grad);
-
+            Prijavanasajam sajam = new Prijavanasajam(kompan,"bbb", "Neaktivan");
              user.setKompanija(kompan);
+             kompan.setPrijavanasajam(sajam);
             try{
                 tx = session.beginTransaction();
-                session.save(kompan);
+                session.save(sajam);
                 tx.commit();
             }catch(Exception e){
                 if(tx != null){
@@ -182,13 +209,22 @@ public class UserDao {
         String pass = hasheFunc(password);
        
         try{
-           tx = session.beginTransaction();
-           String sqlquery="FROM User WHERE username =:username AND password =:password";
+           String sqlquery="FROM User WHERE username =:username";
            Query q = session.createQuery(sqlquery);
+           q.setString("username", username);           
+           tx = session.beginTransaction();
+           if(q.uniqueResult() == null){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Username nije tacan!"));
+              return false;
+           }
+           sqlquery="FROM User WHERE username =:username AND password =:password";
+           q = session.createQuery(sqlquery);
            q.setString("username", username);
            q.setString("password", pass);
            boolean exists = (q.uniqueResult() != null);
-           
+           if(exists == false){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Pogresan password!"));
+           }
           
            tx.commit();
            return exists;

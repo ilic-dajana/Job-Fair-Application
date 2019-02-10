@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Prijavanasajam" table="prijavanasajam" catalog="job_fair" optimistic-lock="version">
+        <id name="idkompanije" type="int">
+            <column name="idkompanije" />
+            <generator class="foreign">
+                <param name="property">kompanija</param>
+            </generator>
+        </id>
+        <one-to-one name="kompanija" class="beans.Kompanija" constrained="true"></one-to-one>
+        <property name="tipprijave" type="string">
+            <column name="tipprijave" length="45" not-null="true" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

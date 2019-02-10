@@ -1,13 +1,18 @@
 
 package controllers;
 
+import beans.Konkurs;
+import beans.User;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import util.Return;
+import util.SessionUtils;
+import util.dao.KompanijaDao;
 import util.dao.UserDao;
 
 
@@ -23,28 +28,38 @@ public class ControllerLogin implements Serializable {
     public String login(){
         
         if(UserDao.proveriKorisnika(username, password)){
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
-          
+            User user = UserDao.dohUser(username);
+            
+            if(user == null){
+                return "index?faces-redirect=true";
+            }
+            SessionUtils.putUser(user);
+            SessionUtils.putUsername(username);
+            
             String res = ControllerPage.checkAdmin(username);
             if(res!= null)
-                return res;
-            res=ControllerPage.checkKompanija(username);
-            if(res!= null)
                return res;
+            res=ControllerPage.checkKompanija(username);
+            if(res!= null)  
+                return res;
             res=ControllerPage.checkStudent(username);
             if(res!= null)
                return res;
+            username = password = "";
             
+        }else{
+            return null;
         }
-       
         return null;
     }
 
      public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-        session.invalidate();
-        return "login";
+        SessionUtils.invalidateSession();
+        SessionUtils.putUser(null);
+        username = password = "";
+        return "login?faces-redirect=true";
     }
     public String getUsername() {
         return username;
@@ -61,6 +76,7 @@ public class ControllerLogin implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
    
     

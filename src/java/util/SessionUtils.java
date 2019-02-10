@@ -1,5 +1,6 @@
 package util;
 
+import beans.User;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,5 +30,21 @@ public class SessionUtils {
         } else {
             return null;
         }
+    }
+    
+    public static void putUser(User user){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+    }
+    public static void putUsername(String username){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
+    }
+    
+    public static void invalidateSession(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+    }
+    
+    public static User getUser(){
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        return (User) session.getAttribute("user");
     }
 }

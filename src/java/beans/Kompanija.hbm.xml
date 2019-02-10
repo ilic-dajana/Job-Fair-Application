@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 3, 2019 8:02:34 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="beans.Kompanija" table="kompanija" catalog="job_fair" optimistic-lock="version">
         <id name="id" type="int">
@@ -44,5 +44,18 @@
         <property name="grad" type="string">
             <column name="grad" length="45" not-null="true" />
         </property>
+        <set name="standovis" table="standovi" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="kompanijaId" not-null="true" />
+            </key>
+            <one-to-many class="beans.Standovi" />
+        </set>
+        <set name="konkurses" table="konkurs" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idkonkurs" not-null="true" />
+            </key>
+            <one-to-many class="beans.Konkurs" />
+        </set>
+        <one-to-one name="prijavanasajam" class="beans.Prijavanasajam"></one-to-one>
     </class>
 </hibernate-mapping>

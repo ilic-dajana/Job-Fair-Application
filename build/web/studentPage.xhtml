@@ -6,37 +6,93 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Korisnik Student</title>
+        <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ControllerPage.authStudent()}"/>
+        </f:metadata>
+
         <h:outputStylesheet library="css" name="registration_style.css"/>
         <div>
             <h:form class="form1">
-            <p:toolbar id="tbK">
-                <f:facet name="left">
-                    <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
-                </f:facet>
-                <f:facet name="left">
-                    <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}"/>
-                </f:facet>
-                <f:facet name="left">
-                    <p:commandButton value="CV" action="#{ControllerPage.CV()}"/>
-                </f:facet>
-                 <f:facet name="right">
-                    <p:outputLabel value="Username:"/>
-                </f:facet>
-                <f:facet name="right" >
-                    <p:outputLabel value="#{username}" style="color:blue;"/>
-                </f:facet>
+                <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.home()}" />
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton value="CV" action="#{ControllerPage.CV()}" disabled="#{!student.mozeCV()}"/>
+                    </f:facet>
+                    <f:facet name="right">
+                        <p:outputLabel value="Username:"/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
                 </p:toolbar> 
             </h:form>   
         </div>
     </h:head>
     <h:body styleClass="image">
         <div style="padding-top: 1rem"/>
-            
+
         <h:form id="studentPage" class="form">
-            <p:messages showDetail="false" autoUpdate="true"/>
-            <p:panel>
-                
-            </p:panel>
+            <p:messages showDetail="true" autoUpdate="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+            <p:panel class="panel">
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid"  >
+
+                    <h:outputLabel value="Ime kompanije:"/>
+                    <h:inputText value="#{student.kompanija}"/>
+
+                    <h:outputLabel value="Pozicija:"/>
+                    <h:inputText value="#{student.pozicija}"/>
+
+                    <p:selectOneRadio value="#{student.tipPretrageKonkursa}">
+                        <f:selectItem itemLabel="Praksa" itemValue="praksa"/>
+                        <f:selectItem itemLabel="Posao" itemValue="posao"/>
+                    </p:selectOneRadio>
+
+                </p:panelGrid>
+                <p:commandButton value="Pretraži kompanije" action="#{student.traziKompanije()}"/>
+                <p:commandButton value="Pretraži konkurse" action="#{student.traziKonkurse()}"/>
+            </p:panel> 
+        </h:form>
+        
+        <h:form class="form1">
+            <p:carousel class="panel" value="#{student.kompanijeZaPretragu}" headerText="Kompanije:" var="komp" itemStyle="text-align:center" responsive="true" rendered="#{!(student.kompanijeZaPretragu.size() == 0)}" >
+                <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+                    <f:facet name="header">#{komp.naziv}</f:facet>                  
+                    
+                    <h:outputLabel value="Direktor firme:"/>
+                    <h:outputLabel value="#{komp.direktorIme}  #{komp.direktorPrezime}" />
+                    <h:outputLabel value="Delatnost:"/>
+                    <h:outputLabel value="#{komp.delatnost}"/>
+                    <h:outputLabel value="Specijalnost:"/>
+                    <h:outputLabel value="#{komp.specijalnost}"/>
+                    <h:outputLabel value="Adresa i grad:"/>
+                    <h:outputLabel value="#{komp.adresa} , #{komp.grad}"/>
+                    <h:outputLabel value="Broj zaposlenih:"/>
+                    <h:outputLabel value="#{komp.brojZaposlenih}"/>
+                </p:panelGrid>
+            </p:carousel>
+            <p:carousel class="panel" value="#{student.konkursiPretrage}" headerText="Konkursi:" var="k" itemStyle="text-align:center" responsive="true" rendered="#{!(student.konkursiPretrage.size() == 0)}" >
+                <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+                    <f:facet name="header">#{k.konkurs.pozicija}</f:facet>                  
+                    
+                    
+                    <h:outputLabel value="Opis:"/>
+                    <h:outputLabel value="#{k.konkurs.opis}"/>                    
+                    <h:outputLabel value="Rok:"/>
+                    <h:outputLabel value="#{k.konkurs.rok}"/>
+                    <h:outputLabel value="Delatnost kompanije:"/>
+                    <h:outputLabel value="#{k.kompanija.delatnost}"/>
+                    <h:outputLabel value="Specijalnost kompanije:"/>
+                    <h:outputLabel value="#{k.kompanija.specijalnost}"/>
+                </p:panelGrid>
+            </p:carousel>
         </h:form>
     </h:body>
 </html>

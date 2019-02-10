@@ -4,18 +4,23 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>CV Upload</title>
-        <h:outputStylesheet library="css" name="registration_style.css"/>
-          <div >
+        <h:outputStylesheet library="css" name="registration_style.css"/>          
+              <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ControllerPage.authStudent()}"/>
+        </f:metadata>
+        <div>
             <h:form class="form1">
             <p:toolbar id="tbK">
                     <f:facet name="left">
-                        <p:commandButton  value="Home" action="#{ControllerPage.home()}"/>
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.home()}" />
                     </f:facet>
                     <f:facet name="left">
-                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" />
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
                     </f:facet>
                     <f:facet name="right">
                        <p:outputLabel value="Username:"/>
@@ -58,35 +63,25 @@
                  <p:outputLabel value=""/>
                
                  <p:outputLabel for="telefon" value="Telefon:"/>
-                <p:inputText id="telefon" value = "???"/>
-                <p:commandButton id="addTelephone" value="+"  action="#{student.addTelephone()}" update="studentCV" style="width: 40px;"/>
-                </p:panelGrid>
-                
-                <ui:repeat value="#{student.telefoni}" var="tel" varStatus="status">
-                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">                       
-                        <p:commandButton action="#{student.removeTelephone(status.index)}" update="studentCV" value="-" style="width: 40px;">
-                            <f:attribute name="index" value="#{status.index}"/>
-                        </p:commandButton>
-                    <p:inputText value="#{tel}" id="tel#{status.index}" style="width:200px;"/>                    
-                    </p:panelGrid>
-                </ui:repeat>
-            
+                 <p:inputText id="telefon" value = "#{student.telefon}"/>                
+                </p:panelGrid>                
+               
                 <p:panelGrid columns="3" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
                 
                 <p:outputLabel for="web" value=" Web/LinkedIn: "/>
-                <p:inputText id="web" value = "???"/>
+                <p:inputText id="web" value = ""/>
                 <p:commandButton id="addWeb" value="+" action="#{student.addWeb()}" style="width: 40px;"  update="studentCV"/>
               
                 </p:panelGrid>
             
-                <ui:repeat value="#{student.webSites}" var="w" varStatus="status">
+                <c:forEach items="#{student.webSites}" var="w" varStatus="status">
                     <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">                       
                         <p:commandButton action="#{student.removeWeb(status.index)}" update="studentCV" value="-" style="width: 40px;">
                             <f:attribute name="index" value="#{status.index}"/>
                         </p:commandButton>
                     <p:inputText value="#{w}" id="w#{status.index}" style="width:200px;"/>                    
                     </p:panelGrid>
-                </ui:repeat>
+                </c:forEach>
                 
                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
                     <p:outputLabel for="tipA" value="Tip aplikacije:"/>

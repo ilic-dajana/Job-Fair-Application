@@ -1,13 +1,16 @@
 package beans;
-// Generated Feb 3, 2019 8:02:34 PM by Hibernate Tools 4.3.1
+// Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,17 +26,19 @@ public class Konkurs  implements java.io.Serializable {
 
 
      private Integer id;
-     private String tipKonkursa;
+     private Kompanija kompanija;
      private String pozicija;
+     private String tipKonkurs;
      private Date rok;
      private String opis;
 
     public Konkurs() {
     }
 
-    public Konkurs(String tipKonkursa, String pozicija, Date rok, String opis) {
-       this.tipKonkursa = tipKonkursa;
+    public Konkurs(Kompanija kompanija, String pozicija, String tipKonkurs, Date rok, String opis) {
+       this.kompanija = kompanija;
        this.pozicija = pozicija;
+       this.tipKonkurs = tipKonkurs;
        this.rok = rok;
        this.opis = opis;
     }
@@ -50,14 +55,14 @@ public class Konkurs  implements java.io.Serializable {
         this.id = id;
     }
 
-    
-    @Column(name="tip_konkursa", nullable=false, length=45)
-    public String getTipKonkursa() {
-        return this.tipKonkursa;
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idkonkurs", nullable=false)
+    public Kompanija getKompanija() {
+        return this.kompanija;
     }
     
-    public void setTipKonkursa(String tipKonkursa) {
-        this.tipKonkursa = tipKonkursa;
+    public void setKompanija(Kompanija kompanija) {
+        this.kompanija = kompanija;
     }
 
     
@@ -70,8 +75,18 @@ public class Konkurs  implements java.io.Serializable {
         this.pozicija = pozicija;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="rok", nullable=false, length=19)
+    
+    @Column(name="tipKonkurs", nullable=false, length=45)
+    public String getTipKonkurs() {
+        return this.tipKonkurs;
+    }
+    
+    public void setTipKonkurs(String tipKonkurs) {
+        this.tipKonkurs = tipKonkurs;
+    }
+
+    @Temporal(TemporalType.DATE)
+    @Column(name="rok", nullable=false, length=10)
     public Date getRok() {
         return this.rok;
     }
