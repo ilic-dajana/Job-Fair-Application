@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 12, 2019 11:30:10 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="beans.Obrazovanje" table="obrazovanje" catalog="job_fair" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="foreign">
-                <param name="property">biografija</param>
-            </generator>
+        <id name="idobrazovanje" type="java.lang.Integer">
+            <column name="idobrazovanje" />
+            <generator class="identity" />
         </id>
-        <one-to-one name="biografija" class="beans.Biografija" constrained="true"></one-to-one>
-        <property name="dateOd" type="date">
-            <column name="date_od" length="10" not-null="true" />
+        <many-to-one name="biografija" class="beans.Biografija" fetch="select">
+            <column name="idBio" not-null="true" />
+        </many-to-one>
+        <property name="dateod" type="date">
+            <column name="dateod" length="10" not-null="true" />
         </property>
-        <property name="dateDo" type="date">
-            <column name="date_do" length="10" not-null="true" />
+        <property name="datedo" type="date">
+            <column name="datedo" length="10" not-null="true" />
         </property>
-        <property name="onGoing" type="int">
-            <column name="on_going" not-null="true" />
+        <property name="onGoing" type="string">
+            <column name="on_going" length="45" not-null="true" />
         </property>
         <property name="stepen" type="string">
-            <column name="stepen" length="50" not-null="true" />
+            <column name="stepen" length="45" not-null="true" />
         </property>
         <property name="fakultet" type="string">
             <column name="fakultet" length="45" not-null="true" />

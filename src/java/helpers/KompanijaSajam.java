@@ -14,7 +14,10 @@ import beans.Kompanija;
 public class KompanijaSajam {
     private Kompanija k;
     private String tip;
-
+    private String stand;
+    private Integer vreme;
+    private String komentar;
+    
     public Kompanija getK() {
         return k;
     }
@@ -29,6 +32,30 @@ public class KompanijaSajam {
 
     public void setTip(String tip) {
         this.tip = tip;
+    }
+
+    public String getStand() {
+        return stand;
+    }
+
+    public void setStand(String stand) {
+        this.stand = stand;
+    }
+
+    public Integer getVreme() {
+        return vreme;
+    }
+
+    public void setVreme(Integer vreme) {
+        this.vreme = vreme;
+    }
+
+    public String getKomentar() {
+        return komentar;
+    }
+
+    public void setKomentar(String komentar) {
+        this.komentar = komentar;
     }
     
     

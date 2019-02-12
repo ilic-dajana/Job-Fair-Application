@@ -9,169 +9,176 @@
     <h:head>
         <title>CV Upload</title>
         <h:outputStylesheet library="css" name="registration_style.css"/>          
-              <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
         <f:metadata>
             <f:event type="preRenderView" listener="#{ControllerPage.authStudent()}"/>
         </f:metadata>
         <div>
             <h:form class="form1">
-            <p:toolbar id="tbK">
+                <p:toolbar id="tbK">
                     <f:facet name="left">
-                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.home()}" />
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.studentPage()}" />
                     </f:facet>
                     <f:facet name="left">
                         <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
                     </f:facet>
                     <f:facet name="right">
-                       <p:outputLabel value="Username:"/>
-                   </f:facet>
-                   <f:facet name="right" >
-                       <p:outputLabel value="#{username}" style="color:blue;"/>
-                   </f:facet>
-                   </p:toolbar> 
+                        <p:outputLabel value="Username:"/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
+                </p:toolbar> 
             </h:form>
         </div>
 
     </h:head>
-     <h:body styleClass="image">
-         <div style="padding-top: 1rem"></div>
-         <h:form id="studentCV" class="form">             
-            <p:messages showDetail="false" autoUpdate="true"/>  
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"></div>
+        <h:form id="studentCV" class="form1">             
+            <p:messages showDetail="true" autoUpdate="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
             <p:panel header="CV Student" class="panel">
                 <h3> Lične informacije: </h3>
-            <p:panelGrid columns="3" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment" >
-                <p:outputLabel for="ime" value="Ime:" />
-                <p:inputText id="ime" value="#{RegistracijaStudent.username}"
-                             />
-                <p:outputLabel value=""/>
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment" >
+
+                    <p:outputLabel for="ime" value="Ime:" />
+                    <p:inputText id="ime" value="#{cv.ime}"/>
+
+
+                    <p:outputLabel for="prezime" value="Prezime:"/>
+                    <p:inputText id="prezime" value="#{cv.prezime}"/>   
+
+                    <p:outputLabel for="adresa" value="Adresa:"/>
+                    <p:inputText id="adresa" value ="#{cv.adresa}"/>
+
+                    <p:outputLabel for="posta" value="Postanski broj:"/>
+                    <p:inputText id="posta" value ="#{cv.postanskiBr}"/>
+
+                    <p:outputLabel for="grad" value ="Grad:"/>
+                    <p:inputText id="grad" value="#{cv.grad}"/>                
+
+                    <p:outputLabel for="drzava" value="Drzava:"/>
+                    <p:inputText id="drzava" value = "#{cv.drzava}"/>
+
+
+                    <p:outputLabel for="telefon" value="Telefon:"/>
+                    <p:inputText id="telefon" value = "#{cv.telefon}"/>  
+                    
+                </p:panelGrid>   
                 
-                <p:outputLabel for="prezime" value="Prezime:"/>
-                <p:inputText id="prezime" value="#{RegistracijaStudent.password}"
-                           />   
-                  <p:outputLabel value=""/>
-                <p:outputLabel for="adresa" value="Adresa:"/>
-                <p:inputText id="adresa" value ="#{RegistracijaStudent.ime}"/>
-             <p:outputLabel value=""/>
-                <p:outputLabel for="posta" value="Postanski broj:"/>
-                <p:inputText id="posta" value ="#{RegistracijaStudent.prezime}"/>
-                    <p:outputLabel value=""/>           
-                <p:outputLabel for="grad" value ="Grad:"/>
-                <p:inputText id="grad" value="#{RegistracijaStudent.telefon}"/>                
-                <p:outputLabel value=""/>
-                <p:outputLabel for="drzava" value="Drzava:"/>
-                <p:inputText id="drzava" value = "#{RegistracijaStudent.email}"/>
-                 <p:outputLabel value=""/>
-               
-                 <p:outputLabel for="telefon" value="Telefon:"/>
-                 <p:inputText id="telefon" value = "#{student.telefon}"/>                
-                </p:panelGrid>                
-               
-                <p:panelGrid columns="3" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
-                
-                <p:outputLabel for="web" value=" Web/LinkedIn: "/>
-                <p:inputText id="web" value = ""/>
-                <p:commandButton id="addWeb" value="+" action="#{student.addWeb()}" style="width: 40px;"  update="studentCV"/>
-              
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                    <p:outputLabel  value="Web sajtovi/ LinkedIn/ Facebook:" style="width: 400px"/>
+                    <p:commandButton action="#{cv.addWeb()}" value="+ " update="studentCV" style="width:40px;"/>
                 </p:panelGrid>
-            
-                <c:forEach items="#{student.webSites}" var="w" varStatus="status">
-                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">                       
-                        <p:commandButton action="#{student.removeWeb(status.index)}" update="studentCV" value="-" style="width: 40px;">
-                            <f:attribute name="index" value="#{status.index}"/>
+
+                <c:forEach var="w" items="#{cv.webSites}" varStatus="status3">
+                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:inputText value="#{w}"/>
+                        <p:commandButton action="#{cv.ukloniWeb(status3.index)}" value="-" update="studentCV" style="width:40px;" >                            
                         </p:commandButton>
-                    <p:inputText value="#{w}" id="w#{status.index}" style="width:200px;"/>                    
                     </p:panelGrid>
                 </c:forEach>
                 
-                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
-                    <p:outputLabel for="tipA" value="Tip aplikacije:"/>
-                    <h:selectOneMenu id="tipA" value="#{student.tipApp}">
-                        <f:selectItem itemValue="Praksa" itemLabel="Praksa"/>
-                        <f:selectItem itemValue="Zaposlenje" itemLabel="Zaposlenje"/>
-                    </h:selectOneMenu>
-                </p:panelGrid> 
-                
-                <h3>Informacije o obrazovanju </h3>
-                
-                 <p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
-                                 
-                    <p:commandButton id="addEd" value="+" action="#{student.addEducation()}" update="studentCV" style="width: 40px;"/>
-              
-                </p:panelGrid>
-                
-                 <ui:repeat value="#{student.educations}" var="ed" varStatus="status">
-                    <p:commandButton action="#{student.removeEducation(status.index)}" update="studentCV" value="-" style="width: 40px;">
-                      <f:attribute name="index" value="#{status.index}"/>
-                    </p:commandButton>
-                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">                       
-                       <p:outputLabel value="Datum od:"/>
-                       <p:inputText value="#{ed}" id="ed#{status.index}" style="width:200px;"/>     
-                       <p:outputLabel value="Datum do:"/>
-                       <p:inputText  style="width:200px;"/>
-                       <p:outputLabel value="I dalje u toku?"/>
-                       <p:selectBooleanCheckbox />
-                       <p:outputLabel value="Stepen obrazovanja:"/>
-                       <h:selectOneMenu value="#{student.straniJezik}">
-                            <f:selectItem itemValue="Osnovna škola" itemLabel="Osnovna škola"/>
-                            <f:selectItem itemValue="Srednja škola" itemLabel="Srednja škola"/>
-                            <f:selectItem itemValue="Visoka škola" itemLabel="Visoka škola"/>
-                            <f:selectItem itemValue="Fakultet" itemLabel="Fakultet"/>                        
-                       </h:selectOneMenu>
-                       <p:outputLabel value="Naziv školske ustanove:"/>
-                       <p:inputText value="" />
-                    </p:panelGrid>
-                </ui:repeat>
-                
-                <h3>Informacije o zaposlenjima/praksama </h3>
-                
-                 <p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
-                                 
-                    <p:commandButton id="addJob" value="+" action="#{student.addJob()}" update="studentCV" style="width: 40px;"/>
-              
-                </p:panelGrid>
-                
-                 <ui:repeat value="#{student.jobs}" var="j" varStatus="status">
-                     <p:commandButton action="#{student.removeJob(status.index)}" update="studentCV" value="-" style="width: 40px;">
-                            <f:attribute name="index" value="#{status.index}"/>
-                        </p:commandButton>
-                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment">                       
-                        <p:outputLabel value="Datum od:"/>
-                        <p:inputText value="#{j}" id="j#{status.index}" style="width:200px;"/>     
-                        <p:outputLabel value="Datum do:"/>
-                        <p:inputText style="width:200px;"/>
-                        <p:outputLabel value="I dalje u toku?"/>
-                        <p:selectBooleanCheckbox />
-                        <p:outputLabel value="Stepen obrazovanja:"/>
-                        <h:selectOneMenu  >
-                             <f:selectItem itemValue="Osnovna škola" itemLabel="Osnovna škola"/>
-                             <f:selectItem itemValue="Srednja škola" itemLabel="Srednja škola"/>
-                             <f:selectItem itemValue="Visoka škola" itemLabel="Visoka škola"/>
-                             <f:selectItem itemValue="Fakultet" itemLabel="Fakultet"/>                        
-                        </h:selectOneMenu>
-                        <p:outputLabel value="Naziv školske ustanove:"/>
-                        <p:inputText  />
-                    </p:panelGrid>
-                </ui:repeat>
-                 <h3> Informacije o ličnim veštinama: </h3>
-                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
-                      <p:outputLabel for="matJez" value="Maternji jezik:"/>
-                      <p:inputText id="matJez" value="#{student.maternjiJezik}"/>
-                      <p:outputLabel for="straniJez" value="Strani jezik(ci):"/>
-                      <p:inputText id="straniJez" value="#{student.straniJezik}"/>
-                </p:panelGrid>
-                
-                 <p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
-                   <p:outputLabel for="communication" value="Komunikacione vestine:"/>
-                   <p:inputTextarea rows="5" cols="50" completeMethod="#{student.communication}" id="communication" value="#{student.communication}"/>
-                   <p:outputLabel for="organisation" value="Organizacione vestine:"/>
-                   <p:inputTextarea rows="5" cols="50" completeMethod="#{student.organisation}" id="organisation" />
-                   <p:outputLabel for="skills" value="Navedite nekoliko kurseva/znanja koja su potrebna za traženu poziciju: "/>
-                   <p:inputTextarea rows="5" cols="50" completeMethod="#{student.skills}" id="skills" />
-               
-                </p:panelGrid>    
-                </p:panel>
-            
+                 <h3> Informacije o obrazovanju: </h3>
                  
+                 <p:commandButton action="#{cv.addEd()}" value="+ " update="studentCV" style="width:40px;"/>
+                 <c:forEach var="o" items="#{cv.obrazovanja}" varStatus="status4">
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:outputLabel value="Naziv ustanove:"/>
+                        <p:inputText value="#{o.fakultet}"/>
+                        <p:outputLabel value="Stepen obrazovanja:"/>
+                        <p:selectOneMenu value="#{o.stepen}">
+                            <f:selectItem itemLabel="Osnovna skola" itemValue="Osnovna skola"/>
+                            <f:selectItem itemLabel="Srednja skola" itemValue="Srednja skola"/>
+                            <f:selectItem itemLabel="Osnovne studije" itemValue="Osnovne studije"/>
+                            <f:selectItem itemLabel="Master studije" itemValue="Master studije"/>
+                            <f:selectItem itemLabel="Doktorske studije" itemValue="Doktorske studije"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Da li je u toku?"/>
+                        <p:selectOneRadio value="#{o.onGoing}">
+                            <f:selectItem itemLabel="Da" itemValue="da"/>
+                            <f:selectItem itemLabel="Ne" itemValue="ne"/>
+                        </p:selectOneRadio>
+                        <p:outputLabel value="Pocetak:"/>
+                        <p:calendar value="#{o.dateOd}"   showOn="button"/>  
+                        <p:outputLabel value="Kraj:"/>
+                        <p:calendar value="#{o.dateDo}"  showOn="button"/>  
+                        <p:commandButton action="#{cv.ukloniEd(status4.index)}" value="-" update="studentCV" style="width:40px;" >                            
+                        </p:commandButton>
+                    </p:panelGrid>
+                </c:forEach>
+                 
+                 <h3> Informacije o prethodnim poslovima/praksama: </h3>
+                 
+                 <p:commandButton action="#{cv.addJob()}" value="+ " update="studentCV" style="width:40px;"/>
+                 <c:forEach var="j" items="#{cv.poslovi}" varStatus="status5">
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:outputLabel value="Naziv firme"/>
+                        <p:inputText value="#{j.fakultet}"/>
+                        <p:outputLabel value="Pozicija:"/>
+                        <p:inputText value="#{j.pozicija}"/>
+                        <p:outputLabel value="Pocetak:"/>
+                        <p:calendar value="#{j.dateOd}"   showOn="button"/>  
+                        <p:outputLabel value="Kraj:"/>
+                        <p:calendar value="#{j.dateDo}"  showOn="button"/> 
+                        <p:outputLabel value="Da li je u toku?"/>
+                        <p:selectOneRadio value="#{j.onGoing}">
+                            <f:selectItem itemLabel="Da" itemValue="da"/>
+                            <f:selectItem itemLabel="Ne" itemValue="ne"/>
+                        </p:selectOneRadio>
+                           <p:commandButton action="#{cv.ukloniJob(status5.index)}" value="-" update="studentCV" style="width:40px;" >                            
+                        </p:commandButton>
+                    </p:panelGrid>
+                </c:forEach>
+                 
+                <h3> Informacije o ličnim veštinama: </h3>
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                    <p:outputLabel  value="Maternji jezik:" style="width: 400px"/>
+                    <p:commandButton action="#{cv.addmatJez()}" value="+ " update="studentCV" style="width:40px;"/>
+                </p:panelGrid>
+
+                <c:forEach var="mat" items="#{cv.maternjiJezik}" varStatus="status1">
+                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:selectOneMenu value="#{mat}" style="width:400px">
+                            <f:selectItems value="#{cv.moguciJezici}"/>
+                        </p:selectOneMenu>  
+                        <p:commandButton action="#{cv.ukloniMat(status1.index)}" value="-" update="studentCV" style="width:40px;" >                            
+                        </p:commandButton>
+                    </p:panelGrid>
+                </c:forEach>
+
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+                    <p:outputLabel  value="Strani jezik:"   style="width:400px"    />             
+                    <p:commandButton action="#{cv.addstrJez()}" update="studentCV" value="+" style="width:40px;"/>
+                </p:panelGrid>
+
+                <c:forEach var="str" items="#{cv.straniJezik}" varStatus="status2">
+                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:selectOneMenu value="#{str}" style="width: 400px">
+                            <f:selectItems value="#{cv.moguciJezici}"/>
+                        </p:selectOneMenu>                        
+                        <p:commandButton action="#{cv.ukloniStr(status2.index)}" value="-" update="studentCV" style="width:40px" />
+                    </p:panelGrid>
+                </c:forEach>
+
+                <p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
+                    <p:outputLabel for="communication" value="Komunikacione vestine:"/>
+                    <p:inputTextarea rows="5" cols="50" value="#{cv.communication}" id="communication" />
+                    <p:outputLabel for="organisation" value="Organizacione vestine:"/>
+                    <p:inputTextarea rows="5" cols="50" value="#{cv.organisation}" id="organisation" />
+                    <p:outputLabel for="skills" value="Navedite nekoliko kurseva/znanja koja su potrebna za traženu poziciju a koje posedujete: "/>
+                    <p:inputTextarea rows="5" cols="50" value="#{cv.skills}" id="skills" />
+
+                </p:panelGrid>
+                <br/>
+                <br/>
+               
+                <p:commandButton value="Zavrsi unos" action="#{cv.unesi()}" style="width:300px; height:50px;"/>
+               
+            </p:panel>
+            
         </h:form>
     </h:body>
 </html>

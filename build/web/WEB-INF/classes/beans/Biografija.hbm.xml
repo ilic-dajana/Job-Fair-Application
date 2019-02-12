@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 12, 2019 11:30:10 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="beans.Biografija" table="biografija" catalog="job_fair" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="assigned" />
+        <id name="idstudent" type="int">
+            <column name="idstudent" />
+            <generator class="foreign">
+                <param name="property">student</param>
+            </generator>
         </id>
+        <one-to-one name="student" class="beans.Student" constrained="true"></one-to-one>
         <property name="ime" type="string">
             <column name="ime" length="45" not-null="true" />
         </property>
@@ -26,15 +29,6 @@
         <property name="grad" type="string">
             <column name="grad" length="45" not-null="true" />
         </property>
-        <property name="tipAplikacije" type="string">
-            <column name="tip_aplikacije" length="45" not-null="true" />
-        </property>
-        <property name="maternjiJezik" type="string">
-            <column name="maternji_jezik" length="45" not-null="true" />
-        </property>
-        <property name="straniJezik" type="string">
-            <column name="strani_jezik" length="45" not-null="true" />
-        </property>
         <property name="communicationSkills" type="string">
             <column name="communication_skills" length="200" not-null="true" />
         </property>
@@ -44,9 +38,38 @@
         <property name="jobrelatedSkills" type="string">
             <column name="jobrelated_skills" length="200" not-null="true" />
         </property>
-        <one-to-one name="obrazovanje" class="beans.Obrazovanje"></one-to-one>
-        <one-to-one name="email" class="beans.Email"></one-to-one>
-        <one-to-one name="zaposlenje" class="beans.Zaposlenje"></one-to-one>
-        <one-to-one name="telefon" class="beans.Telefon"></one-to-one>
+        <property name="telefon" type="string">
+            <column name="telefon" length="45" not-null="true" />
+        </property>
+        <set name="obrazovanjes" table="obrazovanje" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idBio" not-null="true" />
+            </key>
+            <one-to-many class="beans.Obrazovanje" />
+        </set>
+        <set name="zaposlenjes" table="zaposlenje" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idbio" not-null="true" />
+            </key>
+            <one-to-many class="beans.Zaposlenje" />
+        </set>
+        <set name="jezicis" table="jezici" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCV" not-null="true" />
+            </key>
+            <one-to-many class="beans.Jezici" />
+        </set>
+        <set name="prijavanakonkurses" table="prijavanakonkurs" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idcv" not-null="true" />
+            </key>
+            <one-to-many class="beans.Prijavanakonkurs" />
+        </set>
+        <set name="webSiteses" table="webSites" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idcv" not-null="true" />
+            </key>
+            <one-to-many class="beans.WebSites" />
+        </set>
     </class>
 </hibernate-mapping>

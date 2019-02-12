@@ -1,5 +1,5 @@
 package beans;
-// Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1
+// Generated Feb 12, 2019 11:30:09 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -30,20 +30,23 @@ public class Student  implements java.io.Serializable {
      private String telefon;
      private String email;
      private int godinaStudija;
-     private Integer diplomirao;
+     private int diplomirao;
+     private Biografija biografija;
 
     public Student() {
     }
 
 	
-    public Student(User user, String prezime, String telefon, String email, int godinaStudija) {
+    public Student(User user, String ime, String prezime, String telefon, String email, int godinaStudija, int diplomirao) {
         this.user = user;
+        this.ime = ime;
         this.prezime = prezime;
         this.telefon = telefon;
         this.email = email;
         this.godinaStudija = godinaStudija;
+        this.diplomirao = diplomirao;
     }
-    public Student(User user, String ime, String prezime, String telefon, String email, int godinaStudija, Integer diplomirao) {
+    public Student(User user, String ime, String prezime, String telefon, String email, int godinaStudija, int diplomirao, Biografija biografija) {
        this.user = user;
        this.ime = ime;
        this.prezime = prezime;
@@ -51,6 +54,7 @@ public class Student  implements java.io.Serializable {
        this.email = email;
        this.godinaStudija = godinaStudija;
        this.diplomirao = diplomirao;
+       this.biografija = biografija;
     }
    
      @GenericGenerator(name="generator", strategy="foreign", parameters=@Parameter(name="property", value="user"))@Id @GeneratedValue(generator="generator")
@@ -75,7 +79,7 @@ public class Student  implements java.io.Serializable {
     }
 
     
-    @Column(name="ime", length=45)
+    @Column(name="ime", nullable=false, length=45)
     public String getIme() {
         return this.ime;
     }
@@ -125,13 +129,22 @@ public class Student  implements java.io.Serializable {
     }
 
     
-    @Column(name="diplomirao")
-    public Integer getDiplomirao() {
+    @Column(name="diplomirao", nullable=false)
+    public int getDiplomirao() {
         return this.diplomirao;
     }
     
-    public void setDiplomirao(Integer diplomirao) {
+    public void setDiplomirao(int diplomirao) {
         this.diplomirao = diplomirao;
+    }
+
+@OneToOne(fetch=FetchType.LAZY, mappedBy="student")
+    public Biografija getBiografija() {
+        return this.biografija;
+    }
+    
+    public void setBiografija(Biografija biografija) {
+        this.biografija = biografija;
     }
 
 

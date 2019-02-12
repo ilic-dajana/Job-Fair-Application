@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Kompanija: #{username}</title>
+        <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ControllerPage.authKompanija()}"/>
+        </f:metadata>
+        <h:outputStylesheet library="css" name="registration_style.css"/>
+        <div>
+            <h:form class="form1">
+                <p:toolbar id="tbK">
+                     <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.kompanijaPage()}" />
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
+                    </f:facet>  
+                   <f:facet name="right">
+                        <p:outputLabel value="Username: "/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>   
+        </div>
+    </h:head>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"/>
+
+        <h:form id="studentPage" class="form1">
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate />
+            </p:messages>  
+            <p:panel class="panel">
+            <p:carousel value="#{kompanija.prijavesve}" headerText="Prijave za potvrdu" var="prijava" itemStyle="text-align:center" responsive="true">
+                    <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+                       <p:outputLabel value="Konkurs za: " style="color:blue; font-style: initial"/> 
+                       <p:outputLabel value="#{prijava.konkurs.pozicija}"/>
+                        <p:outputLabel value="Informacije o studentu:" style="color: darkblue; font-style: initial"/> 
+                        <p:outputLabel/>
+                        <p:outputLabel value="Ime i prezime:"  style="color:blue; font-style: initial"/>
+                        <p:outputLabel value=" #{prijava.b.ime} #{prijava.b.prezime}"/>
+                        <p:outputLabel value="Drzava, grad, adresa: " style="color:blue; font-style: initial"/>
+                        <p:outputLabel value="#{prijava.b.drzava}, #{prijava.b.grad}, #{prijava.b.adresa}"/>
+                        <p:outputLabel value="Broj telefona:" style="color:blue; font-style: initial"/>
+                        <p:outputLabel value="#{prijava.b.telefon}"/>
+                        <p:outputLabel value="Propratno pismo:"/>
+                        <p:outputLabel value="#{prijava.prijava.coverletter}"/>
+                        <p:commandButton icon="fa fa-fw fa-check" action="#{kompanija.prihvati(prijava)}" style="color: green" />
+                        <p:commandButton icon="fa fa-fw fa-times" action="#{kompanija.odbij(prijava)}" style="color: red"/>
+                    </p:panelGrid>
+                  </p:carousel>
+                <br/>
+                <p:outputLabel value=" &nbsp; &nbsp; Trenutno nema dodatnih prijava!" rendered="#{(kompanija.prijavesve.size() == 0)}" style="color:blue; font-style: initial" />
+                <br/>
+                &nbsp;
+                <p:carousel value="#{kompanija.zavrseno}" headerText="Obradjene prijave" var="zavrseno" itemStyle="text-align:center" responsive="true" rendered="#{!(kompanija.zavrseno.size() == 0)}">
+                    <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="Konkurs za: " style="color:blue; font-style: initial"/> 
+                        <p:outputLabel value="#{zavrseno.konkurs.pozicija}"/>
+                        <p:outputLabel value="Informacije o studentu:" style="color: darkblue; font-style: initial"/> 
+                        <p:outputLabel/>
+                        <p:outputLabel value="Ime i prezime:"  style="color:blue; font-style: initial"/>
+                        <p:outputLabel value=" #{zavrseno.b.ime} #{zavrseno.b.prezime}"/>
+                        <p:outputLabel value="Propratno pismo:"/>
+                        <p:outputLabel value="#{zavrseno.prijava.coverletter}"/>
+                        <p:outputLabel value="Status:"/>
+                        <p:outputLabel value="#{zavrseno.prijava.status}"/>
+                    </p:panelGrid>
+                 </p:carousel>
+                </p:panel>
+        </h:form>
+    </h:body>
+</html>
+

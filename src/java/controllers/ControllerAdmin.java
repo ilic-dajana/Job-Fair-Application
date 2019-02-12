@@ -34,6 +34,7 @@ public class ControllerAdmin {
     private ArrayList<KompanijaSajam> kompanijePrihvacene;
     private Map<String,String> standovi;
     private String izabranStand;
+    private Map<String,String> satnice;
     
     public ControllerAdmin() {
         kompanijeZaSajam = AdminDao.dodajKompanijeZaSajam();
@@ -44,9 +45,19 @@ public class ControllerAdmin {
         standovi.put("Veliki stand", "Veliki stand");
         standovi.put("Glavni stand", "Glavni stand");
         
+        satnice = new HashMap<String,String>();
+        satnice.put("11", "11");
+        satnice.put("12", "12");
+        satnice.put("13", "13");
+        satnice.put("14", "14");
+        satnice.put("15", "15");
+        satnice.put("16", "16");
+        
+        
+        
     }
     public String izaberiStand(Kompanija k, KompanijaSajam komp){
-        AdminDao.dodajStand(k, k.getId(), k.getNaziv(), izabranStand); 
+        AdminDao.dodajStand(k, k.getId(), k.getNaziv(),komp); 
         kompanijePrihvacene.remove(komp);
         return "adminPage?faces-redirect=true";
     }
@@ -163,6 +174,14 @@ public class ControllerAdmin {
 
     public void setIzabranStand(String izabranStand) {
         this.izabranStand = izabranStand;
+    }
+
+    public Map<String, String> getSatnice() {
+        return satnice;
+    }
+
+    public void setSatnice(Map<String, String> satnice) {
+        this.satnice = satnice;
     }
 
     

@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Kompanija: {username}</title>
+        <title>Kompanija: #{username}</title>
         <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
         <f:metadata>
             <f:event type="preRenderView" listener="#{ControllerPage.authKompanija()}"/>
@@ -19,7 +19,10 @@
                     </f:facet>
                     <f:facet name="left">
                         <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
-                    </f:facet>                  
+                    </f:facet>  
+                    <f:facet name="left">
+                        <p:commandButton  value="Prijave" action="#{ControllerPage.prijaveStudenata()}" onclick="#{kompanija.prijave()}" icon="fa fa-fw fa-search" />
+                    </f:facet>  
                     <f:facet name="right">
                         <p:outputLabel value="Username: "/>
                     </f:facet>
@@ -63,6 +66,7 @@
                             <p:selectOneMenu value="#{kompanija.paket}" >
                                 <f:selectItem  itemValue="Generalni" itemLabel="Generalni pokrovitelj"/>
                                 <f:selectItem itemValue="Zlatni" itemLabel="Zlatni"/>
+                                <f:selectItem itemValue="Srebrni" itemLabel="Srebrni"/>
                                 <f:selectItem itemValue="Bronzani" itemLabel="Bronzani"/>
                                 <f:selectItem itemValue="Standardni" itemLabel="Standardni"/>
                             </p:selectOneMenu>

@@ -1,5 +1,5 @@
 package beans;
-// Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1
+// Generated Feb 12, 2019 11:30:09 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -27,14 +27,22 @@ public class Prijavanasajam  implements java.io.Serializable {
      private Kompanija kompanija;
      private String tipprijave;
      private String status;
+     private String komentar;
 
     public Prijavanasajam() {
     }
 
+	
     public Prijavanasajam(Kompanija kompanija, String tipprijave, String status) {
+        this.kompanija = kompanija;
+        this.tipprijave = tipprijave;
+        this.status = status;
+    }
+    public Prijavanasajam(Kompanija kompanija, String tipprijave, String status, String komentar) {
        this.kompanija = kompanija;
        this.tipprijave = tipprijave;
        this.status = status;
+       this.komentar = komentar;
     }
    
      @GenericGenerator(name="generator", strategy="foreign", parameters=@Parameter(name="property", value="kompanija"))@Id @GeneratedValue(generator="generator")
@@ -76,6 +84,16 @@ public class Prijavanasajam  implements java.io.Serializable {
     
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    
+    @Column(name="komentar", length=45)
+    public String getKomentar() {
+        return this.komentar;
+    }
+    
+    public void setKomentar(String komentar) {
+        this.komentar = komentar;
     }
 
 

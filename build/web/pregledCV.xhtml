@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>CV Pregled</title>
+        <h:outputStylesheet library="css" name="registration_style.css"/>          
+        <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ControllerPage.authStudent()}"/>
+        </f:metadata>
+        <div>
+            <h:form class="form1">
+                <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.studentPage()}" />
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
+                    </f:facet>
+                    <f:facet name="right">
+                        <p:outputLabel value="Username:"/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>
+        </div>
+
+    </h:head>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"></div>
+        <h:form id="studentCV" class="form1">             
+            <p:messages showDetail="false" autoUpdate="true" closable="true"/>  
+            <p:panel header="CV Student" class="panel">
+                <h3> Lične informacije: </h3>
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment" >
+
+                    <p:outputLabel for="ime" value="Ime:" style="color:blue"/>
+                    <p:outputLabel id="ime" value="#{cv.ime}"/>
+
+
+                    <p:outputLabel for="prezime" value="Prezime:" style="color:blue"/>
+                    <p:outputLabel id="prezime" value="#{cv.prezime}"/>   
+
+                    <p:outputLabel for="adresa" value="Adresa:" style="color:blue"/>
+                    <p:outputLabel id="adresa" value ="#{cv.adresa}"/>
+
+                    <p:outputLabel for="posta" value="Postanski broj:" style="color:blue"/>
+                    <p:outputLabel id="posta" value ="#{cv.postanskiBr}"/>
+
+                    <p:outputLabel for="grad" value ="Grad:" style="color:blue"/>
+                    <p:outputLabel id="grad" value="#{cv.grad}"/>                
+
+                    <p:outputLabel for="drzava" value="Drzava:" style="color:blue"/>
+                    <p:outputLabel id="drzava" value = "#{cv.drzava}"/>
+
+
+                    <p:outputLabel for="telefon" value="Telefon:" style="color:blue"/>
+                    <p:outputLabel id="telefon" value = "#{cv.telefon}"/>  
+                    
+                </p:panelGrid>   
+                
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                    <p:outputLabel  value="Web sajtovi/ LinkedIn/ Facebook:"  style="color:blue"/>
+                </p:panelGrid>
+
+                <c:forEach var="w" items="#{cv.webSites}" varStatus="status3">
+                    
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:outputLabel value="#{status3.index + 1}."  style="color:blue"/>
+                        <p:outputLabel value="#{w}"/>                       
+                    </p:panelGrid>
+                   <br/>
+                </c:forEach>
+                
+                 <h3> Informacije o obrazovanju: </h3>
+                 
+                
+                 <c:forEach var="o" items="#{cv.obrazovanja}" varStatus="status4">
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:outputLabel value="#{status4.index + 1}." style="color:blue"/>
+                        <p:outputLabel value=""/>
+                        <p:outputLabel value="Naziv ustanove:"/>
+                        <p:outputLabel value="#{o.fakultet}"/>
+                        <p:outputLabel value="Stepen obrazovanja:"/>
+                        <p:outputLabel value="#{o.stepen}"/>                            
+                        <p:outputLabel value="Da li je u toku?"/>
+                        <p:outputLabel value="#{o.onGoing}"/>                           
+                        <p:outputLabel value="Pocetak:"/>
+                        <p:outputLabel value="#{o.dateOd}"/>  
+                        <p:outputLabel value="Kraj:"/>
+                        <p:outputLabel value="#{o.dateDo}"/>  
+                        <br/>                        
+                    </p:panelGrid>
+                </c:forEach>
+                 
+                 <h3> Informacije o prethodnim poslovima/praksama: </h3>                 
+                
+                 <c:forEach var="j" items="#{cv.poslovi}" varStatus="status5">
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:outputLabel value="#{status5.index+1}."  style="color:blue"/>
+                        <p:outputLabel value=""/>
+                        <p:outputLabel value="Naziv firme"/>
+                        <p:outputLabel value="#{j.fakultet}"/>
+                        <p:outputLabel value="Pozicija:"/>
+                        <p:outputLabel value="#{j.pozicija}"/>
+                        <p:outputLabel value="Pocetak:"/>
+                        <p:outputLabel value="#{j.dateOd}"/>  
+                        <p:outputLabel value="Kraj:"/>
+                        <p:outputLabel value="#{j.dateDo}"/> 
+                        <p:outputLabel value="Da li je u toku?"/>
+                        <p:outputLabel value="#{j.onGoing}"/>                          
+                        <br/>        
+                    </p:panelGrid>
+                </c:forEach>
+                 
+                <h3> Informacije o ličnim veštinama: </h3>
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                    <p:outputLabel  value="Maternji jezik:"  style="color:blue"/>
+                </p:panelGrid>
+
+                <c:forEach var="mat" items="#{cv.maternjiJezik}" varStatus="status1">
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:outputLabel value="#{status1.index+1}."  style="color:blue"/>
+                        <p:outputLabel value="#{mat}" />                       
+                    </p:panelGrid>
+                </c:forEach>
+
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+                    <p:outputLabel  value="Strani jezik:"    style="color:blue" />             
+                </p:panelGrid>
+
+                <c:forEach var="str" items="#{cv.straniJezik}" varStatus="status2">
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" >
+                        <p:outputLabel value="#{status2.index+1}."  style="color:blue"/>
+                        <p:outputLabel value="#{str}" />         
+                    </p:panelGrid>
+                </c:forEach>
+
+                <p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid" style="width: 100%" columnClasses="forty-percent top-alignment, sixty-percent top-alignment"> 
+                    <p:outputLabel for="communication" value="Komunikacione vestine:"  style="color:blue"/>
+                    <p:outputLabel  value="#{cv.communication}" id="communication" />
+                    <p:outputLabel for="organisation" value="Organizacione vestine:"  style="color:blue"/>
+                    <p:outputLabel value="#{cv.organisation}" id="organisation" />
+                    <p:outputLabel for="skills" value="Znanja koja posedujem a potrebna za oglas: "  style="color:blue"/>
+                    <p:outputLabel value="#{cv.skills}" id="skills" />
+                </p:panelGrid>
+                <br/>
+                <br/>              
+            </p:panel>
+            
+        </h:form>
+    </h:body>
+</html>
+

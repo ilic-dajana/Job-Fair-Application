@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 12, 2019 11:30:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Jezici" table="jezici" catalog="job_fair" optimistic-lock="version">
+        <id name="idjezici" type="java.lang.Integer">
+            <column name="idjezici" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="biografija" class="beans.Biografija" fetch="select">
+            <column name="idCV" not-null="true" />
+        </many-to-one>
+        <property name="jezik" type="string">
+            <column name="jezik" length="45" not-null="true" />
+        </property>
+        <property name="tip" type="string">
+            <column name="tip" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

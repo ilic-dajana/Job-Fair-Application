@@ -1,6 +1,7 @@
 package util.dao;
 
 import beans.Administrator;
+import beans.Biografija;
 import beans.Kompanija;
 import beans.Prijavanasajam;
 import beans.Student;
@@ -9,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.Set;
 import java.util.logging.Level;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+          
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Prijava konkurs</title>
+        <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ControllerPage.authStudent()}"/>
+        </f:metadata>
+
+        <h:outputStylesheet library="css" name="registration_style.css"/>
+        <div>
+            <h:form class="form1">
+                <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.studentPage()}" />
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
+                    </f:facet>  
+                    <f:facet name="right">
+                        <p:outputLabel value="Username:"/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>   
+        </div>
+    </h:head>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"/>
+
+        <h:form id="studentPage" class="form">
+            <p:messages showDetail="true" autoUpdate="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+            <p:panel class="panel">
+                <p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid"  >
+                    <p:outputLabel value="Unesite vaše propratno pismo:"/>
+                    <p:inputTextarea value="#{student.coverletter}" rows="10" cols="50"/>
+                    <p:commandButton value="Predaj" action="#{student.prijaviKonkurs()}"/>
+                </p:panelGrid>
+            </p:panel>
+        </h:form>        
+    </h:body>
+</html>
+

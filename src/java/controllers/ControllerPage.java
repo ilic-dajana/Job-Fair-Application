@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import beans.Konkurs;
 import beans.User;
 import java.io.IOException;
 import java.util.List;
@@ -34,21 +35,36 @@ public class ControllerPage {
     public static String student(){
         return "registracijaStudent?faces-redirect=true";
     }
+    public static String studentPage(){
+        return "studentPage?faces-redirect=true";
+    }
     public static String kompanija(){
         return "registracijaKompanija?faces-redirect=true";
     }
     public static String home(){
         return "index?faces-redirect=true";
     }
-    
+     public static String kompanijaPage(){
+        return "kompanijaPage?faces-redirect=true";
+    }
     public static String login(){
          return "login?faces-redirect=true";
     }
-    
+    public static String rezultatikonkursa(){
+         return "rezultatikonkursa?faces-redirect=true";
+    }
+    public static String prijavanakonkurs(){        
+         return "prijavakonkurs?faces-redirect=true";
+    }
+    public static String prijaveStudenata(){
+         return "prijaveStudenata?faces-redirect=true";
+    }
     public static String CV(){
         return "studentCVUpload?faces-redirect=true";
     }
-    
+    public static String CVdata(){
+        return "pregledCV?faces-redirect=true";
+    }
     public static String checkAdmin(String username){
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;

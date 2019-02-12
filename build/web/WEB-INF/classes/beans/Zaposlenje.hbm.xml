@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 12, 2019 11:30:10 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="beans.Zaposlenje" table="zaposlenje" catalog="job_fair" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="foreign">
-                <param name="property">biografija</param>
-            </generator>
+        <id name="idzaposlenje" type="java.lang.Integer">
+            <column name="idzaposlenje" />
+            <generator class="identity" />
         </id>
-        <one-to-one name="biografija" class="beans.Biografija" constrained="true"></one-to-one>
+        <many-to-one name="biografija" class="beans.Biografija" fetch="select">
+            <column name="idbio" not-null="true" />
+        </many-to-one>
         <property name="dateOd" type="date">
             <column name="date_od" length="10" not-null="true" />
         </property>
         <property name="dateDo" type="date">
             <column name="date_do" length="10" not-null="true" />
         </property>
-        <property name="onGoing" type="int">
-            <column name="on_going" not-null="true" />
+        <property name="onGoing" type="string">
+            <column name="on_going" length="45" not-null="true" />
         </property>
         <property name="pozicija" type="string">
             <column name="pozicija" length="45" not-null="true" />

@@ -6,11 +6,9 @@
 package util.dao;
 
 import beans.Kompanija;
-import beans.Konkurs;
 import beans.Prijavanasajam;
 import beans.Standovi;
 import java.util.ArrayList;
-import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -72,6 +70,7 @@ public class AdminDao {
             tx = session.beginTransaction();
             Prijavanasajam p = (Prijavanasajam) session.get(Prijavanasajam.class, k.getK().getId());
             p.setStatus("Odbijen");
+            p.setKomentar(k.getKomentar());
             session.update(p);
             tx.commit();            
         }catch(Exception e){
@@ -90,6 +89,7 @@ public class AdminDao {
             tx = session.beginTransaction();
             Prijavanasajam p = (Prijavanasajam) session.get(Prijavanasajam.class, k.getK().getId());
             p.setStatus("Prihvacen");
+            p.setKomentar(k.getKomentar());
             session.update(p);
             tx.commit();            
         }catch(Exception e){
@@ -142,12 +142,16 @@ public class AdminDao {
          }
     }
 
-    public static void dodajStand(Kompanija k, int id, String naziv, String izabranStand) {
+    public static void dodajStand(Kompanija k, int id, String naziv, KompanijaSajam izabranStand) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            Standovi s = new Standovi(k, izabranStand, k.getNaziv());
+            Standovi s = new Standovi();
+            s.setKompanija(k);
+            s.setIme(izabranStand.getStand());
+            s.setVreme(izabranStand.getVreme());
+            s.setKompanijaIme(naziv);
             session.save(s);
             tx.commit();            
         }catch(Exception e){

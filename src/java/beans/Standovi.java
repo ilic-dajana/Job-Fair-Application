@@ -1,5 +1,5 @@
 package beans;
-// Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1
+// Generated Feb 12, 2019 11:30:09 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -26,14 +26,16 @@ public class Standovi  implements java.io.Serializable {
      private Kompanija kompanija;
      private String ime;
      private String kompanijaIme;
+     private int vreme;
 
     public Standovi() {
     }
 
-    public Standovi(Kompanija kompanija, String ime, String kompanijaIme) {
+    public Standovi(Kompanija kompanija, String ime, String kompanijaIme, int vreme) {
        this.kompanija = kompanija;
        this.ime = ime;
        this.kompanijaIme = kompanijaIme;
+       this.vreme = vreme;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -76,6 +78,16 @@ public class Standovi  implements java.io.Serializable {
     
     public void setKompanijaIme(String kompanijaIme) {
         this.kompanijaIme = kompanijaIme;
+    }
+
+    
+    @Column(name="vreme", nullable=false)
+    public int getVreme() {
+        return this.vreme;
+    }
+    
+    public void setVreme(int vreme) {
+        this.vreme = vreme;
     }
 
 

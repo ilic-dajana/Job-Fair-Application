@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 12, 2019 11:30:10 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="beans.Student" table="student" catalog="job_fair" optimistic-lock="version">
         <id name="id" type="int">
@@ -12,7 +12,7 @@
         </id>
         <one-to-one name="user" class="beans.User" constrained="true"></one-to-one>
         <property name="ime" type="string">
-            <column name="ime" length="45" />
+            <column name="ime" length="45" not-null="true" />
         </property>
         <property name="prezime" type="string">
             <column name="prezime" length="45" not-null="true" />
@@ -26,8 +26,9 @@
         <property name="godinaStudija" type="int">
             <column name="godina_studija" not-null="true" />
         </property>
-        <property name="diplomirao" type="java.lang.Integer">
-            <column name="diplomirao" />
+        <property name="diplomirao" type="int">
+            <column name="diplomirao" not-null="true" />
         </property>
+        <one-to-one name="biografija" class="beans.Biografija"></one-to-one>
     </class>
 </hibernate-mapping>

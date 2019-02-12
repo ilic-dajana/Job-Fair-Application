@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package helpers;
-
-import beans.Biografija;
+ 
 import java.util.Date;
 
 /**
@@ -13,43 +12,37 @@ import java.util.Date;
  * @author dajana
  */
 public class Education {
-    
-     private int id;
-     private Biografija biografija;
+         
      private Date dateOd;
      private Date dateDo;
-     private int onGoing;
+     private String onGoing;
      private String stepen;
      private String fakultet;
-
-    public Education(int id, Biografija biografija, Date dateOd, Date dateDo, int onGoing, String stepen, String fakultet) {
-        this.id = id;
-        this.biografija = biografija;
+     private String pozicija;
+     
+    public Education(Date dateOd, Date dateDo, String onGoing, String stepen, String fakultet) {
         this.dateOd = dateOd;
         this.dateDo = dateDo;
         this.onGoing = onGoing;
         this.stepen = stepen;
         this.fakultet = fakultet;
     }
+
+    public Education(Date dateOd, Date dateDo, String onGoing, String stepen, String fakultet, String pozicija) {
+        this.dateOd = dateOd;
+        this.dateDo = dateDo;
+        this.onGoing = onGoing;
+        this.stepen = stepen;
+        this.fakultet = fakultet;
+        this.pozicija = pozicija;
+    }
+    
+    
+
+    public Education() {
+    }
+
      
-     
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Biografija getBiografija() {
-        return biografija;
-    }
-
-    public void setBiografija(Biografija biografija) {
-        this.biografija = biografija;
-    }
-
     public Date getDateOd() {
         return dateOd;
     }
@@ -66,12 +59,20 @@ public class Education {
         this.dateDo = dateDo;
     }
 
-    public int getOnGoing() {
+    public String getOnGoing() {
         return onGoing;
     }
 
-    public void setOnGoing(int onGoing) {
+    public void setOnGoing(String onGoing) {
         this.onGoing = onGoing;
+    }
+
+    public String getPozicija() {
+        return pozicija;
+    }
+
+    public void setPozicija(String pozicija) {
+        this.pozicija = pozicija;
     }
 
     public String getStepen() {
@@ -89,8 +90,8 @@ public class Education {
     public void setFakultet(String fakultet) {
         this.fakultet = fakultet;
     }
-     
-     
+
+    
      
      
      

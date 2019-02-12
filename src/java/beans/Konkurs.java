@@ -1,8 +1,10 @@
 package beans;
-// Generated Feb 10, 2019 3:24:42 PM by Hibernate Tools 4.3.1
+// Generated Feb 12, 2019 11:30:09 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,16 +34,26 @@ public class Konkurs  implements java.io.Serializable {
      private String tipKonkurs;
      private Date rok;
      private String opis;
+     private Set<Prijavanakonkurs> prijavanakonkurses = new HashSet<Prijavanakonkurs>(0);
 
     public Konkurs() {
     }
 
+	
     public Konkurs(Kompanija kompanija, String pozicija, String tipKonkurs, Date rok, String opis) {
+        this.kompanija = kompanija;
+        this.pozicija = pozicija;
+        this.tipKonkurs = tipKonkurs;
+        this.rok = rok;
+        this.opis = opis;
+    }
+    public Konkurs(Kompanija kompanija, String pozicija, String tipKonkurs, Date rok, String opis, Set<Prijavanakonkurs> prijavanakonkurses) {
        this.kompanija = kompanija;
        this.pozicija = pozicija;
        this.tipKonkurs = tipKonkurs;
        this.rok = rok;
        this.opis = opis;
+       this.prijavanakonkurses = prijavanakonkurses;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -103,6 +116,15 @@ public class Konkurs  implements java.io.Serializable {
     
     public void setOpis(String opis) {
         this.opis = opis;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="konkurs")
+    public Set<Prijavanakonkurs> getPrijavanakonkurses() {
+        return this.prijavanakonkurses;
+    }
+    
+    public void setPrijavanakonkurses(Set<Prijavanakonkurs> prijavanakonkurses) {
+        this.prijavanakonkurses = prijavanakonkurses;
     }
 
 

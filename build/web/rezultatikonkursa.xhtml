@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Rezultati konkursa</title>
+        <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ControllerPage.authStudent()}"/>
+        </f:metadata>
+
+        <h:outputStylesheet library="css" name="registration_style.css"/>
+        <div>
+            <h:form class="form1">
+                <p:toolbar id="tbK">
+                    <f:facet name="left">
+                        <p:commandButton  value="Home" icon="fa fa-fw fa-home" action="#{ControllerPage.studentPage()}" />
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:commandButton  value="LogOut" action="#{ControllerLogin.logout()}" icon="fa fa-fw fa-arrow-circle-o-left" />
+                    </f:facet>                    
+                    <f:facet name="left">
+                        <p:menuButton value="Opcije" disabled="#{!student.mozeCV()}">
+                        <p:menuitem value="Update CV" action="#{ControllerPage.CV()}" onclick="#{cv.dopuniCV()}" icon="fa fa-fw fa-upload" />
+                        <p:menuitem value="Pogledaj CV podatke" action="#{ControllerPage.CVdata()}" onclick="#{cv.dopuniCV()}"  icon="fa fa-fw fa-search" />
+                    </p:menuButton>
+                     </f:facet>
+                    <f:facet name="right">
+                        <p:outputLabel value="Username:"/>
+                    </f:facet>
+                    <f:facet name="right" >
+                        <p:outputLabel value="#{username}" style="color:blue;"/>
+                    </f:facet>
+                </p:toolbar> 
+            </h:form>   
+        </div>
+    </h:head>
+    <h:body styleClass="image">
+        <div style="padding-top: 1rem"/>
+
+        <h:form id="studentPage" class="form1">
+            <p:messages showDetail="true" autoUpdate="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+            <p:panel class="panel">
+                <p:dataTable var="k" value="#{student.lista}" styleClass="ui-panelgrid-blank ui-fluid">
+                    <p:column headerText="Pozicija konkurs:" style="color:blue">
+                        <h:outputText value="#{k.konkurs}"/>
+                    </p:column>  
+                    <p:column headerText="Ime i prezime" style="color:blue">
+                        <h:outputText value="#{k.ime}"/>
+                    </p:column>  
+                    <p:column headerText="Status" style="color:blue">
+                        <h:outputText value="#{k.status}"/>
+                    </p:column>  
+                </p:dataTable>
+            </p:panel>
+        </h:form>                
+    </h:body>
+</html>
+

@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Admin: {username}</title>
+        <title>Admin: #{username}</title>
 
         <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
         <f:metadata>
@@ -75,9 +75,11 @@
                     <h:outputLabel value="Delatnost:"/>
                     <h:outputLabel value="#{kk.k.delatnost}"/>
                     <h:outputLabel value="Direktor firme:"/>
-                    <h:outputLabel value="#{kk.k.direktorIme}  #{kk.k.direktorPrezime}" />
-                    <h:commandButton value="Prihvati" action="#{ControllerAdmin.prihvati(kk.k.id)}"/>
-                    <h:commandButton value="Odbij" action="#{ControllerAdmin.odbij(kk.k.id)}"/>
+                    <h:outputLabel value="#{kk.k.direktorIme}  #{kk.k.direktorPrezime}" />                    
+                    <h:outputLabel value="Komentar:"/>
+                    <p:inputText value="#{kk.komentar}" style="width:100px"/>
+                    <p:commandButton value="Prihvati" action="#{ControllerAdmin.prihvati(kk.k.id)}" icon="fa fa-fw fa-check"/>
+                    <p:commandButton value="Odbij" action="#{ControllerAdmin.odbij(kk.k.id)}" icon="fa fa-fw fa-times" />
                 </p:panelGrid>
             </p:carousel>
             <p:carousel class="panel" value="#{ControllerAdmin.kompanijePrihvacene}" headerText="Kompanije kojima treba da se raspodeli mesto:" var="komp" itemStyle="text-align:center" responsive="true" rendered="#{!(ControllerAdmin.kompanijePrihvacene.size() == 0)}">
@@ -90,8 +92,12 @@
                     <h:outputLabel value="Direktor firme:"/>
                     <h:outputLabel value="#{komp.k.direktorIme}  #{komp.k.direktorPrezime}" />
                     <h:outputLabel value="Izaberi stand:"/>
-                    <p:selectOneMenu value="#{ControllerAdmin.izabranStand}">
+                    <p:selectOneMenu value="#{komp.stand}">
                         <f:selectItems value="#{ControllerAdmin.standovi}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="Izaberi vreme:"/>
+                    <p:selectOneMenu value="#{komp.vreme}">
+                        <f:selectItems value="#{ControllerAdmin.satnice}"/>
                     </p:selectOneMenu>
                     <h:commandButton value="Zavrsi izbor" action="#{ControllerAdmin.izaberiStand(komp.k, komp)}"/>
                 </p:panelGrid>
