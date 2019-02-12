@@ -41,20 +41,21 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="job_fair"/>
-  <table-filter match-name="standovi"/>
-  <table-filter match-name="prijavanakonkurs"/>
-  <table-filter match-name="jezici"/>
-  <table-filter match-name="kompanija"/>
   <table-filter match-name="obrazovanje"/>
-  <table-filter match-name="prijavanasajam"/>
-  <table-filter match-name="datumZaSajam"/>
-  <table-filter match-name="student"/>
-  <table-filter match-name="ocenjivanje"/>
-  <table-filter match-name="konkurs"/>
-  <table-filter match-name="User"/>
   <table-filter match-name="datumZaCv"/>
-  <table-filter match-name="zaposlenje"/>
-  <table-filter match-name="administrator"/>
-  <table-filter match-name="biografija"/>
   <table-filter match-name="webSites"/>
+  <table-filter match-name="biografija"/>
+  <table-filter match-name="zaposlenje"/>
+  <table-filter match-name="jezici"/>
+  <table-filter match-name="prijavanasajam"/>
+  <table-filter match-name="prijavanakonkurs"/>
+  <table-filter match-name="konkurs"/>
+  <table-filter match-name="standovi"/>
+  <table-filter match-name="datumZaSajam"/>
+  <table-filter match-name="sajam"/>
+  <table-filter match-name="kompanija"/>
+  <table-filter match-name="student"/>
+  <table-filter match-name="administrator"/>
+  <table-filter match-name="User"/>
+  <table-filter match-name="ocenjivanje"/>
 </hibernate-reverse-engineering>

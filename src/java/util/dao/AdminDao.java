@@ -7,6 +7,7 @@ package util.dao;
 
 import beans.Kompanija;
 import beans.Prijavanasajam;
+import beans.Sajam;
 import beans.Standovi;
 import java.util.ArrayList;
 import org.hibernate.Query;
@@ -14,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 import helpers.KompanijaSajam;
+import java.util.Date;
 
 /**
  *
@@ -158,6 +160,36 @@ public class AdminDao {
             if(tx!= null)
                 tx.rollback();
             e.printStackTrace();            
+        }finally{
+            session.close();
+         }
+    }
+
+    public static boolean saveSajam(String imesajma, String imesale, Date sajampocetak, Date sajamkraj, String jedanaest, String dvanaest, String trinaest, String cetrnaest, String petnaest) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            Sajam s = (Sajam) session.get(Sajam.class, 0);
+            if(s==null)
+                return false;
+            s.setImeSajma(imesajma);
+            s.setImesale(imesale);
+            s.setDatumpocetak(sajampocetak);
+            s.setDatumkraj(sajamkraj);
+            s.setJedanaest(jedanaest);
+            s.setDvanaest(dvanaest);
+            s.setTrinaest(trinaest);
+            s.setCetrnaest(cetrnaest);
+            s.setPetnaest(petnaest);
+            session.saveOrUpdate(s);
+            tx.commit();    
+            return true;
+        }catch(Exception e){
+            if(tx!= null)
+                tx.rollback();
+            e.printStackTrace();         
+            return false;
         }finally{
             session.close();
          }

@@ -49,12 +49,13 @@ Contributor(s):
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
-    <mapping resource="beans/DatumZaCv.hbm.xml"/>
     <mapping resource="beans/Administrator.hbm.xml"/>
+    <mapping resource="beans/DatumZaCv.hbm.xml"/>
     <mapping resource="beans/WebSites.hbm.xml"/>
     <mapping resource="beans/Zaposlenje.hbm.xml"/>
     <mapping resource="beans/Jezici.hbm.xml"/>
     <mapping resource="beans/Biografija.hbm.xml"/>
+    <mapping resource="beans/Sajam.hbm.xml"/>
     <mapping resource="beans/Standovi.hbm.xml"/>
     <mapping resource="beans/Kompanija.hbm.xml"/>
     <mapping resource="beans/Student.hbm.xml"/>

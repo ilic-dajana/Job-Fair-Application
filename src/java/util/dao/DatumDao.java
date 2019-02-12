@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import util.HibernateUtil;
 import beans.DatumZaCv;
 import beans.DatumZaSajam;
+import beans.Sajam;
 /**
  *
  * @author dajana
@@ -101,6 +102,28 @@ public class DatumDao {
             Date begin =cv.getDatumPocetak();
             Date end = cv.getDatumKraj();
             if(!datum.before(begin) && !datum.after(end)){
+                return true;
+            }
+           
+            tx.commit();
+            return false;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }finally{
+            session.close();
+        }
+    }
+    public static boolean proveriSajam() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            Sajam cv = (Sajam) session.get(Sajam.class, 0);
+            Date begin =cv.getDatumkraj();
+            Date danas = new Date();
+            
+            if(danas.after(begin)){
                 return true;
             }
            

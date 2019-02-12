@@ -102,6 +102,93 @@
                     <h:commandButton value="Zavrsi izbor" action="#{ControllerAdmin.izaberiStand(komp.k, komp)}"/>
                 </p:panelGrid>
             </p:carousel>
+            <p:growl id="growl" sticky="true" showDetail="true"/>
+ 
+            <p:wizard flowListener="#{ControllerAdmin.onFlowProcess}"  rendered="#{ControllerAdmin.dozvoliSajam()}" >
+                <p:tab id="info" title="Informacije o sajmu">
+                    <p:panel header="Informacije o sajmu">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Ime sajma:"/>
+                            <h:inputText value="#{ControllerAdmin.imesajma}" required="true"/>
+                             <h:outputLabel value="Ime sale:"/>
+                             <h:inputText value="#{ControllerAdmin.imesale}"/>
+                            <h:outputLabel value="Datum pocetka sajma:"/>
+                            <p:calendar value="#{ControllerAdmin.sajampocetak}" showOn="button" required="true"/>
+                            <h:outputLabel value="Datum kraja sajma:"/>
+                            <p:calendar value="#{ControllerAdmin.sajamkraj}" showOn="button" required="true"/>
+                                                   
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="raspored" title="Raspored">
+                     <p:panel header="Raspored na sajmu">
+                        <h:panelGrid columns="2">
+                          
+                         <p:fileUpload fileUploadListener="#{PictureDao.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                         label="Dodaj logo" auto="90000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                         <h:outputLabel/>
+                         <h:outputLabel value="Aktivnost za 11h:"/>
+                         <p:selectOneMenu value="#{ControllerAdmin.jedanaest}" required="true">
+                             <f:selectItem itemLabel="Predavanje" itemValue="predavanje"/>
+                             <f:selectItem itemLabel="Prezentacija" itemValue="prezentacija"/>
+                             <f:selectItem itemLabel="Radionica" itemValue="radionica"/>
+                         </p:selectOneMenu>
+                         
+                         <h:outputLabel value="Aktivnost za 12h:" />
+                         <p:selectOneMenu value="#{ControllerAdmin.dvanaest}" required="true">
+                             <f:selectItem itemLabel="Predavanje" itemValue="predavanje"/>
+                             <f:selectItem itemLabel="Prezentacija" itemValue="prezentacija"/>
+                             <f:selectItem itemLabel="Radionica" itemValue="radionica"/>
+                         </p:selectOneMenu>
+                         <h:outputLabel value="Aktivnost za 13h:"/>
+                         
+                         <p:selectOneMenu value="#{ControllerAdmin.trinaest}" required="true">
+                             <f:selectItem itemLabel="Predavanje" itemValue="predavanje"/>
+                             <f:selectItem itemLabel="Prezentacija" itemValue="prezentacija"/>
+                             <f:selectItem itemLabel="Radionica" itemValue="radionica"/>
+                         </p:selectOneMenu>
+                         
+                         <h:outputLabel value="Aktivnost za 14h:"/>
+                         <p:selectOneMenu value="#{ControllerAdmin.cetrnaest}" required="true">
+                             <f:selectItem itemLabel="Predavanje" itemValue="predavanje"/>
+                             <f:selectItem itemLabel="Prezentacija" itemValue="prezentacija"/>
+                             <f:selectItem itemLabel="Radionica" itemValue="radionica"/>
+                         </p:selectOneMenu>
+                         <h:outputLabel value="Aktivnost za 15h:"/>
+                         <p:selectOneMenu value="#{ControllerAdmin.petnaest}" required="true">
+                             <f:selectItem itemLabel="Predavanje" itemValue="predavanje"/>
+                             <f:selectItem itemLabel="Prezentacija" itemValue="prezentacija"/>
+                             <f:selectItem itemLabel="Radionica" itemValue="radionica"/>
+                         </p:selectOneMenu>
+                             
+                        </h:panelGrid>
+                     </p:panel>
+                </p:tab>
+                <p:tab id="prikaz" title="Pregled">
+                    <p:panel header="Pregled unetih podataka i dodavanje sajma">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Ime sajma:" style="color:blue;"/>
+                            <p:outputLabel value="#{ControllerAdmin.imesajma}"/>
+                            <p:outputLabel value="Ime sale" style="color:blue;"/>
+                            <p:outputLabel value="#{ControllerAdmin.imesale}"/>
+                            <p:outputLabel value="Datum sajma:" style="color:blue;"/>
+                            <p:outputLabel value="#{ControllerAdmin.sajampocetak} - #{ControllerAdmin.sajamkraj}"/>
+                            <p:outputLabel value="Aktivnost za 11h:" style="color:blue;"/>
+                            <p:outputLabel value="#{ControllerAdmin.jedanaest}"/>
+                             <p:outputLabel value="Aktivnost za 12h:" style="color:blue;"/>
+                             <p:outputLabel value="#{ControllerAdmin.dvanaest}"/>
+                             <p:outputLabel value="Aktivnost za 13h:" style="color:blue;"/>
+                             <p:outputLabel value="#{ControllerAdmin.trinaest}"/>
+                             <p:outputLabel value="Aktivnost za 14h:" style="color:blue;"/>
+                             <p:outputLabel value="#{ControllerAdmin.cetrnaest}"/>
+                             <p:outputLabel value="Aktivnost za 15h:" style="color:blue;"/>
+                             <p:outputLabel value="#{ControllerAdmin.petnaest}"/>    
+                             <p:commandButton value="Dodaj" action="#{ControllerAdmin.saveSajam()}" update="growl" process="@this"/>
+                        </p:panelGrid>
+                    </p:panel>
+                </p:tab>
+            </p:wizard>
+     
         </h:form>
     </h:body>
 </html>

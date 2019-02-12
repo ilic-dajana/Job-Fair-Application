@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 12, 2019 2:08:24 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Sajam" table="sajam" catalog="job_fair" optimistic-lock="version">
+        <id name="idsajam" type="int">
+            <column name="idsajam" />
+            <generator class="assigned" />
+        </id>
+        <property name="imeSajma" type="string">
+            <column name="imeSajma" length="45" />
+        </property>
+        <property name="imesale" type="string">
+            <column name="imesale" length="45" />
+        </property>
+        <property name="datumkraj" type="date">
+            <column name="datumkraj" length="10" />
+        </property>
+        <property name="datumpocetak" type="date">
+            <column name="datumpocetak" length="10" />
+        </property>
+        <property name="jedanaest" type="string">
+            <column name="jedanaest" length="45" />
+        </property>
+        <property name="dvanaest" type="string">
+            <column name="dvanaest" length="45" />
+        </property>
+        <property name="trinaest" type="string">
+            <column name="trinaest" length="45" />
+        </property>
+        <property name="cetrnaest" type="string">
+            <column name="cetrnaest" length="45" />
+        </property>
+        <property name="petnaest" type="string">
+            <column name="petnaest" length="45" />
+        </property>
+        <property name="sajamcol" type="string">
+            <column name="sajamcol" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>
